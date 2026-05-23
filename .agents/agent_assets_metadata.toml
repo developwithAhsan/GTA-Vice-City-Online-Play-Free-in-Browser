@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "sjcI72cnjNi6Pn_SZtlyb"
+uri = "file://README.md"
+type = "text"
+title = "SEO README.md for GitHub"

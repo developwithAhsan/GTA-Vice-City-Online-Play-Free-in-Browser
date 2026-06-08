@@ -101,13 +101,15 @@
 
     <!-- Full-screen loading overlay (shown during download/extraction) -->
     <div id="setup-progress" class="hidden" role="status" aria-label="Loading game files">
-      <p class="ls-title">LOADING...</p>
-      <p class="ls-sub">this may take some time on first load, be patient</p>
+      <p class="ls-title" id="setup-progress-title">LOADING...</p>
       <div class="ls-bar-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100">
         <div class="ls-bar-fill" id="setup-progress-bar"></div>
+        <div class="ls-bar-shimmer"></div>
       </div>
       <p id="setup-progress-percent" class="ls-pct" aria-live="polite">0%</p>
       <p id="setup-progress-label" class="ls-label" aria-live="polite">Preparing&hellip;</p>
+      <p id="setup-progress-file" class="ls-file" aria-live="polite"></p>
+      <p id="setup-progress-tip" class="ls-tip"></p>
     </div>
 
     <!-- Main page -->

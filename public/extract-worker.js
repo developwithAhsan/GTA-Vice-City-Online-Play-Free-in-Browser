@@ -22,6 +22,25 @@ async function openOPFSWritable(name) {
     return fh.createWritable();
 }
 
+// ── Progress throttle ─────────────────────────────────────────────────────────
+let lastProgressSent = 0;
+function sendProgress(data, force = false) {
+    const now = Date.now();
+    if (force || now - lastProgressSent >= 48) {
+        lastProgressSent = now;
+        self.postMessage(data);
+    }
+}
+
+// ── Flatten chunk array into one Uint8Array ──────────────────────────────────
+function flattenChunks(chunks, totalLen) {
+    if (chunks.length === 1) return chunks[0];
+    const out = new Uint8Array(totalLen);
+    let off = 0;
+    for (const c of chunks) { out.set(c, off); off += c.length; }
+    return out;
+}
+
 self.onmessage = async (event) => {
     const { file, url } = event.data;
     try {
@@ -31,7 +50,7 @@ self.onmessage = async (event) => {
         let sourceStream;
 
         if (url) {
-            self.postMessage({ type: 'progress', phase: 'downloading', pct: 0, loaded: 0, total: 0 });
+            sendProgress({ type: 'progress', phase: 'downloading', pct: 0, loaded: 0, total: 0 }, true);
             let response;
             try {
                 response = await fetch(url);
@@ -48,8 +67,8 @@ self.onmessage = async (event) => {
                 transform(chunk, controller) {
                     loadedBytes += chunk.byteLength;
                     if (contentLength > 0) {
-                        const pct = Math.min(Math.round((loadedBytes / contentLength) * 70), 70);
-                        self.postMessage({ type: 'progress', phase: 'downloading', pct, loaded: loadedBytes, total: contentLength });
+                        const pct = Math.min(Math.round((loadedBytes / contentLength) * 65), 65);
+                        sendProgress({ type: 'progress', phase: 'downloading', pct, loaded: loadedBytes, total: contentLength });
                     }
                     controller.enqueue(chunk);
                 }
@@ -57,33 +76,60 @@ self.onmessage = async (event) => {
             sourceStream = response.body.pipeThrough(trackDownload);
         } else {
             contentLength = file.size;
-            self.postMessage({ type: 'progress', phase: 'reading', pct: 0, loaded: 0, total: contentLength });
+            sendProgress({ type: 'progress', phase: 'reading', pct: 0, loaded: 0, total: contentLength }, true);
             const trackRead = new TransformStream({
                 transform(chunk, controller) {
                     loadedBytes += chunk.byteLength;
-                    const pct = Math.min(Math.round((loadedBytes / contentLength) * 70), 70);
-                    self.postMessage({ type: 'progress', phase: 'reading', pct, loaded: loadedBytes, total: contentLength });
+                    const pct = Math.min(Math.round((loadedBytes / contentLength) * 65), 65);
+                    sendProgress({ type: 'progress', phase: 'reading', pct, loaded: loadedBytes, total: contentLength });
                     controller.enqueue(chunk);
                 }
             });
             sourceStream = file.stream().pipeThrough(trackRead);
         }
 
+        // ── Count decompressed bytes for smooth extraction progress ───────────
+        // Game decompresses to ~880 MB; used for progress estimation (65–99%)
+        const ESTIMATED_DECOMP_BYTES = 880 * 1024 * 1024;
+        let bytesOut = 0;
+
+        const trackDecomp = new TransformStream({
+            transform(chunk, controller) {
+                bytesOut += chunk.byteLength;
+                controller.enqueue(chunk);
+            }
+        });
+
         // ── Pipe through DecompressionStream ─────────────────────────────────
-        const decompressed = sourceStream.pipeThrough(new DecompressionStream('gzip'));
+        const decompressed = sourceStream
+            .pipeThrough(new DecompressionStream('gzip'))
+            .pipeThrough(trackDecomp);
         const reader = decompressed.getReader();
 
         // ── Streaming tar parser state ────────────────────────────────────────
         let buf = new Uint8Array(0);
-        let state = 'HEADER';   // HEADER | DATA | SKIP | LONGNAME
+        let state = 'HEADER';
         let paddedRemaining = 0;
         let actualRemaining = 0;
         let pendingLongName = null;
         let currentWritable = null;
+        let currentFileName = '';
         let longNameBuf = new Uint8Array(0);
         let filesDone = 0;
 
-        self.postMessage({ type: 'progress', phase: 'extracting', pct: 70, done: 0, total: 0 });
+        // Batch write buffer — accumulate up to 1 MB before flushing to OPFS
+        const FLUSH_SIZE = 1024 * 1024;
+        let writeChunks = [];
+        let writeTotal = 0;
+
+        async function flushWrite(force = false) {
+            if (writeTotal === 0 || (!force && writeTotal < FLUSH_SIZE)) return;
+            await currentWritable.write(flattenChunks(writeChunks, writeTotal));
+            writeChunks = [];
+            writeTotal = 0;
+        }
+
+        sendProgress({ type: 'progress', phase: 'extracting', pct: 65, done: 0, total: 0, file: '' }, true);
 
         async function processBuffer() {
             while (true) {
@@ -119,6 +165,9 @@ self.onmessage = async (event) => {
                             state = paddedRemaining > 0 ? 'SKIP' : 'HEADER';
                         } else {
                             currentWritable = await openOPFSWritable(name);
+                            currentFileName = name.split('/').pop();
+                            writeChunks = [];
+                            writeTotal = 0;
                             state = 'DATA';
                         }
                     }
@@ -128,17 +177,20 @@ self.onmessage = async (event) => {
                     const take = Math.min(paddedRemaining, buf.length);
                     const writeLen = Math.min(actualRemaining, take);
                     if (writeLen > 0) {
-                        await currentWritable.write(buf.subarray(0, writeLen));
+                        writeChunks.push(buf.slice(0, writeLen));
+                        writeTotal += writeLen;
                         actualRemaining -= writeLen;
+                        await flushWrite(false);
                     }
                     buf = buf.subarray(take);
                     paddedRemaining -= take;
                     if (paddedRemaining === 0) {
+                        await flushWrite(true);
                         await currentWritable.close();
                         currentWritable = null;
                         filesDone++;
-                        const pct = 70 + Math.min(filesDone, 29);
-                        self.postMessage({ type: 'progress', phase: 'extracting', pct, done: filesDone, total: 0 });
+                        const pct = 65 + Math.min(Math.round((bytesOut / ESTIMATED_DECOMP_BYTES) * 34), 34);
+                        sendProgress({ type: 'progress', phase: 'extracting', pct, done: filesDone, total: 0, file: currentFileName });
                         state = 'HEADER';
                     }
 
@@ -178,7 +230,6 @@ self.onmessage = async (event) => {
             const { done, value } = await reader.read();
             if (done) break;
 
-            // Append new chunk to leftover buffer
             if (buf.length === 0) {
                 buf = value;
             } else {
@@ -194,6 +245,7 @@ self.onmessage = async (event) => {
         // Final flush
         await processBuffer();
         if (currentWritable) {
+            await flushWrite(true);
             await currentWritable.close();
             currentWritable = null;
         }
@@ -205,7 +257,7 @@ self.onmessage = async (event) => {
         await w.write(new TextEncoder().encode('v4'));
         await w.close();
 
-        self.postMessage({ type: 'progress', phase: 'extracting', pct: 100, done: filesDone, total: filesDone });
+        sendProgress({ type: 'progress', phase: 'extracting', pct: 100, done: filesDone, total: filesDone, file: '' }, true);
         self.postMessage({ type: 'done' });
 
     } catch (err) {

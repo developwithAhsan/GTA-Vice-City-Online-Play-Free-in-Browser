@@ -136,7 +136,28 @@ body.gameIsStarted .intro-container {
   inset: 0 auto 0 0;
   width: 0%;
   background: #c8d8e8;
-  transition: width 0.3s ease;
+  transition: width 0.5s ease-out;
+}
+
+.ls-bar-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.18) 40%,
+    rgba(255,255,255,0.32) 50%,
+    rgba(255,255,255,0.18) 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: ls-shimmer 1.6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes ls-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 .ls-pct {
@@ -151,11 +172,37 @@ body.gameIsStarted .intro-container {
 
 .ls-label {
   margin: 0;
-  font-size: 0.78rem;
-  color: #4a6080;
+  font-size: 0.8rem;
+  color: #5a7090;
   text-align: center;
-  max-width: 420px;
+  max-width: 480px;
   min-height: 1.2em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ls-file {
+  margin: 2px 0 0;
+  font-size: 0.72rem;
+  color: #3a5068;
+  text-align: center;
+  max-width: 480px;
+  min-height: 1em;
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ls-tip {
+  margin: 14px 0 0;
+  font-size: 0.78rem;
+  color: #4a6880;
+  text-align: center;
+  max-width: 440px;
+  font-style: italic;
+  line-height: 1.5;
+  min-height: 2.2em;
+  transition: opacity 0.35s ease;
 }
 
 /* ─── Page wrapper ────────────────────────────────────────── */

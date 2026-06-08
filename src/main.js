@@ -207,6 +207,19 @@ async function resetGameData() {
   }
 }
 
+const VC_TIPS = [
+  "Vice City is set in 1986 Miami — 109 licensed songs across 9 radio stations.",
+  "Tommy Vercetti is voiced by Ray Liotta.",
+  "The map has two main islands connected by three bridges.",
+  "You can buy businesses to generate passive income.",
+  "The Infernus is the fastest car in the game — find it in Vice Point.",
+  "The Hunter military helicopter has missiles AND a minigun.",
+  "Use the Rhino tank for almost anything — it's nearly indestructible.",
+  "Files are being written to your browser's local storage.",
+  "This is a one-time download — the game loads instantly next visit.",
+  "Vice City's map is nearly twice the size of GTA III's Liberty City.",
+];
+
 async function initSetupFlow() {
   const overlay = document.getElementById("setup-overlay");
   const downloadLink = document.getElementById("dl-link");
@@ -215,6 +228,9 @@ async function initSetupFlow() {
   const progressBar = document.getElementById("setup-progress-bar");
   const progressLabel = document.getElementById("setup-progress-label");
   const progressPercent = document.getElementById("setup-progress-percent");
+  const progressFile = document.getElementById("setup-progress-file");
+  const progressTip = document.getElementById("setup-progress-tip");
+  const progressTitle = document.getElementById("setup-progress-title");
   const errorBox = document.getElementById("setup-error");
   const storageStatus = document.getElementById("storage-status");
   const selectedFileName = document.getElementById("selected-file-name");
@@ -299,12 +315,30 @@ async function initSetupFlow() {
     progressLabel.textContent = "Connecting…";
     progressPercent.textContent = "0%";
     progressBar.style.width = "0%";
+    if (progressFile) progressFile.textContent = "";
     setPlayAvailability(false);
 
+    // Rotate tips every 7 seconds while loading
+    let tipIndex = Math.floor(Math.random() * VC_TIPS.length);
+    let tipInterval = null;
+    if (progressTip) {
+      const showTip = () => {
+        progressTip.style.opacity = "0";
+        setTimeout(() => {
+          progressTip.textContent = "💡 " + VC_TIPS[tipIndex % VC_TIPS.length];
+          tipIndex++;
+          progressTip.style.opacity = "1";
+        }, 350);
+      };
+      showTip();
+      tipInterval = setInterval(showTip, 7000);
+    }
+
     let downloadStartTime = null;
-    let extractStartTime = null;
+    let lastPhase = null;
 
     const onInstallError = (message) => {
+      if (tipInterval) clearInterval(tipInterval);
       progress.classList.add("hidden");
       showError(message);
       setStorageStatus("Installation failed — try again", "missing");
@@ -325,9 +359,10 @@ async function initSetupFlow() {
 
         if (msg.type === "progress") {
           progressBar.style.width = `${msg.pct}%`;
-          progressPercent.textContent = `${msg.pct}%`;
+          progressPercent.textContent = `${Math.round(msg.pct)}%`;
 
           if (msg.phase === "downloading" || msg.phase === "reading") {
+            if (progressFile) progressFile.textContent = "";
             if (msg.total > 0) {
               if (!downloadStartTime) downloadStartTime = Date.now();
               const loadedMB = (msg.loaded / 1048576).toFixed(0);
@@ -336,32 +371,33 @@ async function initSetupFlow() {
               const speed = elapsedSec > 0 ? msg.loaded / elapsedSec : 0;
               const remainingSec = speed > 0 ? (msg.total - msg.loaded) / speed : Infinity;
               const eta = formatTimeRemaining(remainingSec);
-              const label = msg.phase === "reading" ? "Reading" : "Loading";
-              progressLabel.textContent = `${label}… ${loadedMB} MB / ${totalMB} MB${eta ? "  •  " + eta : ""}`;
+              const speedMB = speed > 0 ? ` • ${(speed / 1048576).toFixed(1)} MB/s` : "";
+              const label = msg.phase === "reading" ? "Reading" : "Downloading";
+              progressLabel.textContent = `${label}… ${loadedMB} / ${totalMB} MB${speedMB}${eta ? "  •  " + eta : ""}`;
             } else {
               progressLabel.textContent = "Connecting to server…";
             }
-          } else if (msg.phase === "decompressing") {
-            progressLabel.textContent = "Decompressing archive…";
           } else if (msg.phase === "extracting") {
-            if (!extractStartTime) extractStartTime = Date.now();
-            const done = msg.done || 0;
-            const total = msg.total || 0;
-            let eta = "";
-            if (done > 0 && total > 0) {
-              const elapsedSec = (Date.now() - extractStartTime) / 1000;
-              const remainingSec = elapsedSec > 0 ? (elapsedSec / done) * (total - done) : Infinity;
-              eta = formatTimeRemaining(remainingSec);
+            if (lastPhase !== "extracting" && progressTitle) {
+              progressTitle.textContent = "EXTRACTING...";
             }
-            progressLabel.textContent = `Extracting files… ${done} / ${total || ""}${eta ? "  •  " + eta : ""}`;
+            if (msg.file && progressFile) {
+              progressFile.textContent = msg.file;
+            }
+            progressLabel.textContent = `Writing to storage… ${msg.done || 0} files`;
           }
+
+          lastPhase = msg.phase;
           return;
         }
 
         if (msg.type === "done") {
+          if (tipInterval) clearInterval(tipInterval);
           progressBar.style.width = "100%";
           progressPercent.textContent = "100%";
           progressLabel.textContent = "Verifying…";
+          if (progressFile) progressFile.textContent = "";
+          if (progressTip) progressTip.textContent = "";
           const { ready: isReady, reason } = await waitForGameReady();
           if (isReady) {
             setStorageStatus("Ready to play", "ready");

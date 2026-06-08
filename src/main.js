@@ -368,11 +368,12 @@ async function initSetupFlow() {
               const loadedMB = (msg.loaded / 1048576).toFixed(0);
               const totalMB = (msg.total / 1048576).toFixed(0);
               const elapsedSec = (Date.now() - downloadStartTime) / 1000;
-              const speed = elapsedSec > 0 ? msg.loaded / elapsedSec : 0;
+              const speed = elapsedSec > 1 ? msg.loaded / elapsedSec : 0;
               const remainingSec = speed > 0 ? (msg.total - msg.loaded) / speed : Infinity;
               const eta = formatTimeRemaining(remainingSec);
               const speedMB = speed > 0 ? ` • ${(speed / 1048576).toFixed(1)} MB/s` : "";
-              const label = msg.phase === "reading" ? "Reading" : "Downloading";
+              const label = msg.phase === "reading" ? "Reading" : (msg.resuming ? "Resuming" : "Downloading");
+              if (msg.resuming && progressTitle) progressTitle.textContent = "RESUMING...";
               progressLabel.textContent = `${label}… ${loadedMB} / ${totalMB} MB${speedMB}${eta ? "  •  " + eta : ""}`;
             } else {
               progressLabel.textContent = "Connecting to server…";

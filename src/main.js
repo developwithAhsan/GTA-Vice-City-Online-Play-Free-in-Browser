@@ -1,3 +1,5 @@
+import { initSaveManagerModal } from "./save-manager.js";
+
 const ASSET_RELEASE_URL = import.meta.env.VITE_ASSET_URL || "https://archive.org/download/gta-vicecity-wasm-assets/game.tar.gz";
 
 const BASE = import.meta.env.BASE_URL;
@@ -208,16 +210,47 @@ async function resetGameData() {
 }
 
 const VC_TIPS = [
+  // Fun facts
   "Vice City is set in 1986 Miami — 109 licensed songs across 9 radio stations.",
   "Tommy Vercetti is voiced by Ray Liotta.",
   "The map has two main islands connected by three bridges.",
-  "You can buy businesses to generate passive income.",
-  "The Infernus is the fastest car in the game — find it in Vice Point.",
-  "The Hunter military helicopter has missiles AND a minigun.",
-  "Use the Rhino tank for almost anything — it's nearly indestructible.",
-  "Files are being written to your browser's local storage.",
-  "This is a one-time download — the game loads instantly next visit.",
   "Vice City's map is nearly twice the size of GTA III's Liberty City.",
+  "The game features over 35 hours of story missions.",
+  "The Malibu Club mission 'The Job' is the longest in the entire game.",
+  "Vice City sold over 17.5 million copies on PS2 alone.",
+  "The radio DJ Lazlow appears in every GTA game since Vice City.",
+  "You can find a secret Easter egg on the roof of the VCPD building.",
+  "Ken Rosenberg is inspired by the movie Scarface's sidekick character.",
+  // Gameplay tips
+  "You can buy businesses like the Malibu Club, Boatyard and Print Works to earn passive income.",
+  "The Infernus is one of the fastest cars — look for it in Vice Point.",
+  "The Hunter military helicopter has missiles AND a minigun. Find it at Fort Baxter Air Base.",
+  "Use the Rhino tank for almost anything — it's nearly indestructible.",
+  "Tap the sprint button repeatedly instead of holding it to run faster.",
+  "You can avoid a 2-star wanted level by simply driving far away from the crime scene.",
+  "Saving your game removes your wanted level — use the Ocean View Hotel early on.",
+  "Motorcycles are faster than cars in the city but much harder to control at high speed.",
+  "Right-click (or L2) to lock on to enemies — then strafe sideways to avoid their fire.",
+  "PCJ-600 motorcycle is great for time-critical missions — it spawns near the hotel.",
+  "You can skip the Pay 'n' Spray if you drive far enough from police before they see your car.",
+  "Swimming too long drains your health in Vice City — Tommy can't swim well.",
+  "Holding a weapon while entering a car lets you shoot from vehicle windows.",
+  // Cheats
+  "Cheat: ASPIRINE restores your health to full at any time.",
+  "Cheat: PRECIOUSPROTECTION gives you full armour instantly.",
+  "Cheat: BIGBANG blows up every nearby vehicle — useful in a pinch.",
+  "Cheat: FANNYMAGNET attracts pedestrians — great for chaos.",
+  "Cheat: LEAVEMEALONE removes your wanted level immediately.",
+  "Cheat: COMEFLYWITHME makes all vehicles able to fly.",
+  "Cheat: SEAWAYS lets boats drive on land — a classic favourite.",
+  "Cheat: PANZER spawns a Rhino tank right next to you.",
+  "Cheat: ROCKANDROLLMAN spawns a Sanchez dirt bike.",
+  // Loading info
+  "Files are being written to your browser's private local storage (OPFS).",
+  "This is a one-time download — the game loads instantly on every future visit.",
+  "If the download stops, just click Install Game again — it resumes automatically.",
+  "The game uses WebAssembly to run the original engine at near-native speed.",
+  "Your save files stay in your browser — use the Save Manager to back them up.",
 ];
 
 async function initSetupFlow() {
@@ -583,6 +616,7 @@ async function boot() {
     return;
   }
 
+  initSaveManagerModal();
   await initSetupFlow();
   await loadLegacyScripts();
 

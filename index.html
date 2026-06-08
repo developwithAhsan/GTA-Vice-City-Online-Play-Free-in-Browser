@@ -112,6 +112,23 @@
       <p id="setup-progress-tip" class="ls-tip"></p>
     </div>
 
+    <!-- Save Manager Modal -->
+    <div id="save-manager-modal" class="sm-overlay hidden" role="dialog" aria-modal="true" aria-label="Save Manager" aria-hidden="true">
+      <div class="sm-panel">
+        <div class="sm-header">
+          <h2 class="sm-title">SAVE MANAGER</h2>
+          <button class="sm-close" id="save-manager-close" aria-label="Close save manager">✕</button>
+        </div>
+        <p id="sm-note" class="sm-note hidden"></p>
+        <p id="sm-loading" class="sm-loading">Loading save slots…</p>
+        <div id="sm-slots" class="sm-slots"></div>
+        <div class="sm-footer">
+          <button class="sm-refresh-btn" id="sm-refresh-btn">↻ Refresh</button>
+          <span class="sm-footer-note">Uploads take effect after restarting the game</span>
+        </div>
+      </div>
+    </div>
+
     <!-- Main page -->
     <div class="page-wrap">
 
@@ -400,14 +417,6 @@
             }
           });
         }
-        // Save manager placeholder
-        const saveBtn = document.getElementById('save-manager-btn');
-        if (saveBtn) {
-          saveBtn.addEventListener('click', () => {
-            alert('Save Manager: Upload a .b save file from your PC or PS2 to resume your progress, or download your current save as a backup.');
-          });
-        }
-
         // Touch controls toggle: cycles AUTO → ON → OFF → AUTO
         const touchBtn = document.getElementById('touch-controls-toggle');
         if (touchBtn) {

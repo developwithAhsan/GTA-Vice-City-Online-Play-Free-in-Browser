@@ -850,9 +850,10 @@ body.gameIsStarted .touch-control {
   -webkit-tap-highlight-color: transparent;
 }
 .touch-control:active {
-  background: rgba(50, 100, 200, 0.82);
-  border-color: rgba(180, 220, 255, 0.75);
-  transform: scale(0.93);
+  background: rgba(50, 110, 220, 0.9);
+  border-color: rgba(180, 220, 255, 0.95);
+  transform: scale(0.88);
+  box-shadow: 0 0 20px rgba(100, 170, 255, 0.55);
 }
 
 /* Kill controls when menu/cutscene/disabled */
@@ -860,11 +861,37 @@ body.gameIsStarted .touch-control {
 
 /* ── Shared icon styling for all circular buttons ────────────────────────── */
 .touch-control {
-  background-size: 58%;
+  background-size: 52%;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center 36%;
   font-size: 0; /* hide any accidental text */
 }
+
+/* ── Label below each button icon ─────────────────────────── */
+.touch-control::after {
+  content: '';
+  position: absolute;
+  bottom: 9%;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 2.2vmin;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.6);
+  pointer-events: none;
+  line-height: 1;
+}
+.touch-control.gas::after    { content: 'GAS';   color: rgba(140,255,140,0.8); font-size: 2.6vmin; }
+.touch-control.brake::after  { content: 'BRK';   color: rgba(255,130,130,0.8); font-size: 2.6vmin; }
+.touch-control.drift::after  { content: 'DRIFT'; }
+.touch-control.car.getOut::after { content: 'EXIT'; }
+.touch-control.car.getIn::after  { content: 'ENTER'; }
+.touch-control.horn::after   { content: 'HORN'; }
+.touch-control.camera::after { content: 'CAM'; }
+.touch-control.jump::after   { content: 'JUMP'; }
+.touch-control.run::after    { content: 'RUN'; }
+.touch-control.fist::after   { content: 'HIT'; }
+.touch-control.weapon::after { content: 'WEAP'; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    PAUSE  —  top-left, house icon, always visible during play
@@ -912,33 +939,33 @@ body.gameIsStarted .touch-control {
 /* ENTER CAR — right side, upper (on foot only) */
 .touch-control.car.getIn {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%23fff' d='M142.5 94.5h-6V75a6 6 0 0 0-.44-2.25L121.5 42.75a6.002 6.002 0 0 0-5.56-3.75H64.06a6.002 6.002 0 0 0-5.56 3.75L44 72.75A6 6 0 0 0 43.5 75v19.5h-6a6 6 0 0 0 0 12H40v22.5a6 6 0 0 0 6 6h10.5a6 6 0 0 0 6-6v-7.5h55.5v7.5a6 6 0 0 0 6 6H135a6 6 0 0 0 6-6V106.5h1.5a6 6 0 0 0 0-12M67.44 51h45.12l10.44 24H57zm-11.94 60a9 9 0 1 1 .001-18.001A9 9 0 0 1 55.5 111m69 0a9 9 0 1 1 .001-18.001A9 9 0 0 1 124.5 111'/%3E%3C/svg%3E");
-  right: 4vmin; top: 27vmin;
-  width: 14vmin; height: 14vmin;
+  right: 4vmin; top: 21vmin;
+  width: 16vmin; height: 16vmin;
 }
 
 /* PUNCH / ATTACK — right side, below ENTER CAR (on foot only) */
 .touch-control.fist {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%23fff' d='M131.77 60.516c-.975-5.67-6.254-9.558-11.924-8.583l-3.128.538c-.518-3.015-2.29-5.693-4.99-7.35-2.697-1.655-5.895-2.08-8.912-1.18l-.902.264c-1.29-2.67-3.538-4.784-6.38-5.84-2.84-1.054-5.895-.913-8.6.342l-1.186.546c-1.808-2.393-4.546-3.964-7.662-4.14-5.744-.318-10.678 4.113-10.997 9.857l-.636 11.494c-1.97-.293-4.01-.1-5.933.617-5.385 2.01-8.337 7.694-6.897 13.23l4.877 18.7c.127.486.288.96.48 1.42L57.28 99.59c-3.68 6.72-2.793 14.978 2.208 20.678l18.458 20.955c3.384 3.84 8.213 6.036 13.283 6.036h26.334c9.444 0 17.297-7.226 17.99-16.644l2.567-35.083c.178-2.43-.14-4.837-.9-7.085l.975-.167c5.672-.976 9.558-6.255 8.583-11.925z'/%3E%3C/svg%3E");
-  right: 4vmin; top: 44vmin;
-  width: 14vmin; height: 14vmin;
+  right: 4vmin; top: 40vmin;
+  width: 16vmin; height: 16vmin;
 }
 
 /* Show on-foot right-column when: game + touch + on foot + not in menu/cutscene */
 .gameIsStarted[data-is-touch="1"][data-state-car="0"][data-state-menu="0"][data-state-cutscene="0"] .touch-control.car.getIn,
 .gameIsStarted[data-is-touch="1"][data-state-car="0"][data-state-menu="0"][data-state-cutscene="0"] .touch-control.fist { display: flex; }
 
-/* EXIT CAR — right side, upper (in car only) */
+/* EXIT CAR — top-right (in car only) */
 .touch-control.car.getOut {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%23fff' d='M142.5 94.5h-6V75a6 6 0 0 0-.44-2.25L121.5 42.75a6.002 6.002 0 0 0-5.56-3.75H64.06a6.002 6.002 0 0 0-5.56 3.75L44 72.75A6 6 0 0 0 43.5 75v19.5h-6a6 6 0 0 0 0 12H40v22.5a6 6 0 0 0 6 6h10.5a6 6 0 0 0 6-6v-7.5h55.5v7.5a6 6 0 0 0 6 6H135a6 6 0 0 0 6-6V106.5h1.5a6 6 0 0 0 0-12M67.44 51h45.12l10.44 24H57zm-11.94 60a9 9 0 1 1 .001-18.001A9 9 0 0 1 55.5 111m69 0a9 9 0 1 1 .001-18.001A9 9 0 0 1 124.5 111'/%3E%3Cpath fill='%23ff8080' d='M100 78l22 12-22 12V78z'/%3E%3C/svg%3E");
-  right: 4vmin; top: 27vmin;
-  width: 14vmin; height: 14vmin;
+  right: 4vmin; top: 5vmin;
+  width: 16vmin; height: 16vmin;
 }
 
 /* DRIFT / HANDBRAKE — right side, below EXIT CAR (in car only) */
 .touch-control.drift {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%23fff' d='M48 79.5h51l-18-18 8.484-8.485 29.032 29.031-29.032 29.032L81 102.593l18-18H48z'/%3E%3Ccircle cx='90' cy='90' r='62' stroke='%23fff' stroke-width='6' fill='none'/%3E%3C/svg%3E");
-  right: 4vmin; top: 44vmin;
-  width: 14vmin; height: 14vmin;
+  right: 4vmin; top: 23vmin;
+  width: 16vmin; height: 16vmin;
 }
 
 /* Show in-car right-column */
@@ -950,13 +977,13 @@ body.gameIsStarted .touch-control {
    ═══════════════════════════════════════════════════════════════════════════ */
 .touch-control.camera {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%23fff' d='M135 58.5h-15.44l-9.31-13.97A6 6 0 0 0 105.25 42h-30.5a6 6 0 0 0-5 2.53L60.44 58.5H45a13.5 13.5 0 0 0-13.5 13.5v57A13.5 13.5 0 0 0 45 142.5h90A13.5 13.5 0 0 0 148.5 129V72A13.5 13.5 0 0 0 135 58.5M90 123a25.5 25.5 0 1 1 0-51 25.5 25.5 0 0 1 0 51'/%3E%3C/svg%3E");
-  right: 18vmin; top: 5vmin;
-  width: 12vmin; height: 12vmin;
+  right: 22vmin; top: 5vmin;
+  width: 14vmin; height: 14vmin;
 }
 .touch-control.horn {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%23fff' d='M118.5 55.97a6 6 0 0 0-6.12.28L79.76 76.5H58.5A16.5 16.5 0 0 0 42 93v6a16.5 16.5 0 0 0 16.5 16.5H64l5.84 24.72a6 6 0 0 0 5.84 4.56q.46 0 .93-.07a6 6 0 0 0 4.98-6.85L76.17 115.5h3.58l32.63 20.25a6 6 0 0 0 6.12.28 6 6 0 0 0 3.13-5.28V61.25a6 6 0 0 0-3.13-5.28'/%3E%3C/svg%3E");
-  right: 4vmin; top: 5vmin;
-  width: 12vmin; height: 12vmin;
+  right: 38vmin; top: 5vmin;
+  width: 14vmin; height: 14vmin;
 }
 .gameIsStarted[data-is-touch="1"][data-state-car="1"][data-state-menu="0"][data-state-cutscene="0"] .touch-control.camera,
 .gameIsStarted[data-is-touch="1"][data-state-car="1"][data-state-menu="0"][data-state-cutscene="0"] .touch-control.horn { display: flex; }
@@ -965,7 +992,7 @@ body.gameIsStarted .touch-control {
 .touch-control.weapon {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%23fff' d='M148 72H96V62a6 6 0 0 0-6-6H56a6 6 0 0 0-6 6v56a6 6 0 0 0 6 6h34a6 6 0 0 0 6-6V98h12v10a6 6 0 0 0 6 6h34a6 6 0 0 0 6-6V78a6 6 0 0 0-6-6z'/%3E%3C/svg%3E");
   right: 4vmin; top: 5vmin;
-  width: 12vmin; height: 12vmin;
+  width: 14vmin; height: 14vmin;
 }
 .gameIsStarted[data-is-touch="1"][data-state-car="0"][data-state-menu="0"][data-state-cutscene="0"] .touch-control.weapon { display: flex; }
 
@@ -974,13 +1001,13 @@ body.gameIsStarted .touch-control {
    ═══════════════════════════════════════════════════════════════════════════ */
 .touch-control.run {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%23fff' d='M90 40.5c8.008 0 14.5-6.492 14.5-14.5S98.008 11.5 90 11.5 75.5 17.992 75.5 26 81.992 40.5 90 40.5m34.303 46.963-13.5-27a6 6 0 0 0-4.037-3.179l-18-4.5a6.004 6.004 0 0 0-6.61 2.863L70.422 74.25H55.5a6 6 0 0 0 0 12h18a5.998 5.998 0 0 0 5.156-2.933l7.168-12.244 5.028 10.053-11.2 11.2a5.99 5.99 0 0 0-1.636 5.36l4.5 22.5a6.001 6.001 0 1 0 11.768-2.354l-3.924-19.62 9.492-9.49 3.304 6.609a6 6 0 0 0 2.338 2.555l18 10.5a6.002 6.002 0 0 0 6-10.393l-15.19-8.861zM70.675 123.468l-9.31-6.527-12.272 17.497a6 6 0 1 0 9.813 6.884z'/%3E%3C/svg%3E");
-  right: 20vmin; bottom: 5vmin;
-  width: 14vmin; height: 14vmin;
+  right: 22vmin; bottom: 5vmin;
+  width: 16vmin; height: 16vmin;
 }
 .touch-control.jump {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%23fff' d='M121.787 67.372c-10.171-5.855-16.174-11.504-22.205-20.367-.048-.072-.055-.17-.07-.255-1.01-5.835 3.645-9.23 2.079-13.779-1.554-4.515-4.935-5.477-10.671-4.799-7.724.913-5.02 8.573-4.922 14.326.025 1.505-.323 2.963-.45 3.438a1.3 1.3 0 0 1-.119.296C79.084 57.48 60.617 57.572 56.24 64.396c-2.187 3.463.742 12.197 2.047 14.916.032.066.029.132.054.2 1.92 5.165 8.862 10.678 11.644 13.166.33.295.798.373 1.204.196 2.781-1.215 4.428-1.904 7.559-2.043 8.33-.373 23.374 2.668 28.564 9.25 3.303 4.18 3.373 10.36 3.136 15.608-.1 2.202 3.062 2.607 3.584.476 2.16-8.827.824-20.156-4.836-27.166-2.315-2.84-5.26-4.976-8.477-6.469 4.54-.926 8.966-1.232 13.594.132 3.87 1.131 7.166 3.506 9.645 6.606 5.87 7.395 6.26 17.9 4.32 26.875-.407 1.897 2.187 2.985 3.25 1.335 6.9-10.701 7.94-26.127 1.71-37.383-2.014-3.629-4.832-6.694-8.15-8.922z'/%3E%3C/svg%3E");
   right: 4vmin; bottom: 5vmin;
-  width: 14vmin; height: 14vmin;
+  width: 16vmin; height: 16vmin;
 }
 .gameIsStarted[data-is-touch="1"][data-state-car="0"][data-state-menu="0"][data-state-cutscene="0"] .touch-control.run,
 .gameIsStarted[data-is-touch="1"][data-state-car="0"][data-state-menu="0"][data-state-cutscene="0"] .touch-control.jump { display: flex; }
@@ -1039,26 +1066,26 @@ body.gameIsStarted .touch-control {
    GAS & BRAKE  —  bottom-right, shown only in car
    ═══════════════════════════════════════════════════════════════════════════ */
 .touch-control.gas {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%2390ff90' d='M90 35 L155 135 H25 Z'/%3E%3Ctext x='90' y='165' text-anchor='middle' fill='%2390ff90' font-size='28' font-family='system-ui' font-weight='800'%3EGAS%3C/text%3E%3C/svg%3E");
-  right: 4vmin; bottom: 22vmin;
-  width: 16vmin; height: 16vmin;
-  border-color: rgba(100, 255, 100, 0.45);
-  font-size: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%2390ff90' d='M90 38 L150 130 H30 Z'/%3E%3C/svg%3E");
+  right: 4vmin; bottom: 5vmin;
+  width: 18vmin; height: 18vmin;
+  border-color: rgba(100, 255, 100, 0.5);
+  border-radius: 14px;
 }
-.touch-control.gas:active { background-color: rgba(30, 120, 30, 0.85); border-color: rgba(100, 255, 100, 0.85); }
+.touch-control.gas:active { background-color: rgba(30, 140, 30, 0.9); border-color: rgba(100, 255, 100, 0.95); box-shadow: 0 0 22px rgba(100,255,100,0.5); }
 
 .touch-control.brake {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%23ff8080' d='M90 135 L155 45 H25 Z'/%3E%3Crect x='25' y='148' width='130' height='14' rx='7' fill='%23ff8080'/%3E%3C/svg%3E");
-  right: 4vmin; bottom: 5vmin;
-  width: 16vmin; height: 16vmin;
-  border-color: rgba(255, 120, 120, 0.45);
-  font-size: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%23ff8080' d='M90 130 L150 42 H30 Z'/%3E%3Crect x='28' y='144' width='124' height='14' rx='7' fill='%23ff8080'/%3E%3C/svg%3E");
+  right: 24vmin; bottom: 5vmin;
+  width: 18vmin; height: 18vmin;
+  border-color: rgba(255, 120, 120, 0.5);
+  border-radius: 14px;
 }
-.touch-control.brake:active { background-color: rgba(120, 30, 30, 0.85); border-color: rgba(255, 120, 120, 0.85); }
+.touch-control.brake:active { background-color: rgba(140, 30, 30, 0.9); border-color: rgba(255, 120, 120, 0.95); box-shadow: 0 0 22px rgba(255,100,100,0.5); }
 
-/* Show gas/brake only in car, during gameplay */
-.gameIsStarted[data-is-touch="1"][data-state-car="1"][data-state-menu="0"][data-state-cutscene="0"] .touch-control.gas,
-.gameIsStarted[data-is-touch="1"][data-state-car="1"][data-state-menu="0"][data-state-cutscene="0"] .touch-control.brake { display: flex; }
+/* Show gas/brake only in car WITHOUT mounted gun (fire buttons take their spot when armed) */
+.gameIsStarted[data-is-touch="1"][data-state-car="1"][data-state-car-gun="0"][data-state-menu="0"][data-state-cutscene="0"] .touch-control.gas,
+.gameIsStarted[data-is-touch="1"][data-state-car="1"][data-state-car-gun="0"][data-state-menu="0"][data-state-cutscene="0"] .touch-control.brake { display: flex; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    JOYSTICK ZONES

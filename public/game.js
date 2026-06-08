@@ -168,6 +168,96 @@ async function loadData() {
     return new Uint8Array(buffer.buffer);
 };
 
+function setupVisualJoysticks() {
+    const moveZone = document.getElementById('move');
+    const lookZone = document.getElementById('look');
+    if (!moveZone || !lookZone) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:596;';
+    document.body.appendChild(canvas);
+
+    const touches = {};
+
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const getMaxDist = () => Math.min(window.innerWidth, window.innerHeight) * 0.1;
+
+    const draw = () => {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const MAX = getMaxDist();
+        for (const t of Object.values(touches)) {
+            const dx = t.cx - t.sx, dy = t.cy - t.sy;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const clamped = Math.min(dist, MAX);
+            const angle = Math.atan2(dy, dx);
+            const stickX = t.sx + Math.cos(angle) * clamped;
+            const stickY = t.sy + Math.sin(angle) * clamped;
+            const col = t.zone === 'move' ? [140, 200, 255] : [255, 190, 120];
+            const [r, g, b] = col;
+
+            // Outer base ring
+            ctx.beginPath();
+            ctx.arc(t.sx, t.sy, MAX + 10, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(${r},${g},${b},0.22)`;
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+            ctx.fillStyle = `rgba(${r},${g},${b},0.06)`;
+            ctx.fill();
+
+            // Center dot
+            ctx.beginPath();
+            ctx.arc(t.sx, t.sy, 5, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${r},${g},${b},0.4)`;
+            ctx.fill();
+
+            // Connecting line
+            ctx.beginPath();
+            ctx.moveTo(t.sx, t.sy);
+            ctx.lineTo(stickX, stickY);
+            ctx.strokeStyle = `rgba(${r},${g},${b},0.25)`;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Thumbstick
+            const sr = MAX * 0.42;
+            ctx.beginPath();
+            ctx.arc(stickX, stickY, sr, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${r},${g},${b},0.5)`;
+            ctx.fill();
+            ctx.strokeStyle = `rgba(${r},${g},${b},0.9)`;
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+        }
+    };
+
+    const isZoneActive = (zoneEl) => window.getComputedStyle(zoneEl).pointerEvents !== 'none';
+
+    document.addEventListener('pointerdown', e => {
+        if (e.target.closest('.touch-control') || e.target.id === 'tc-cheat-btn') return;
+        const isLeft = e.clientX < window.innerWidth / 2;
+        const zone = isLeft ? 'move' : 'look';
+        const zoneEl = isLeft ? moveZone : lookZone;
+        if (!isZoneActive(zoneEl)) return;
+        touches[e.pointerId] = { sx: e.clientX, sy: e.clientY, cx: e.clientX, cy: e.clientY, zone };
+        requestAnimationFrame(draw);
+    });
+
+    document.addEventListener('pointermove', e => {
+        if (!touches[e.pointerId]) return;
+        touches[e.pointerId].cx = e.clientX;
+        touches[e.pointerId].cy = e.clientY;
+        requestAnimationFrame(draw);
+    });
+
+    const endTouch = e => { delete touches[e.pointerId]; requestAnimationFrame(draw); };
+    document.addEventListener('pointerup', endTouch);
+    document.addEventListener('pointercancel', endTouch);
+}
+
 async function startGame(e) {
     e.stopPropagation();
     await resumeAudioContexts();
@@ -479,6 +569,9 @@ async function loadGame(data) {
         lockTargetWhilePressed: true,
         tapTarget: document.querySelector('.touch-control.brake'),
     }]);
+
+    // Visual joystick overlay
+    setupVisualJoysticks();
 }
 
 const clickToPlay = document.querySelector('.click-to-play');

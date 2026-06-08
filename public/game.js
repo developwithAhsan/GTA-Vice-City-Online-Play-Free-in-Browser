@@ -22,6 +22,11 @@ let maxFPS = parseInt(params.get('max_fps')) || 0;
 const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 let isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
+// Respect the user's touch-controls preference from the settings toggle
+const _touchPref = localStorage.getItem('vcsky.touchControls');
+if (_touchPref === 'on') isTouch = true;
+else if (_touchPref === 'off') isTouch = false;
+
 document.body.dataset.isTouch = isTouch ? 1 : 0;
 
 const dataSize = 130 * 1024 * 1024;
@@ -452,6 +457,27 @@ async function loadGame(data) {
         buttonIndexes: [1, 6],
         lockTargetWhilePressed: false,
         tapTarget: document.querySelector('.touch-control.fireLeft'),
+    }]);
+
+    // Exit vehicle (same button as enter)
+    emulator.AddDisplayButtonEventListeners(0, [{
+        buttonIndex: 3,
+        lockTargetWhilePressed: false,
+        tapTarget: document.querySelector('.touch-control.car.getOut'),
+    }]);
+
+    // Gas (accelerate) — DPad Up, held while pressed
+    emulator.AddDisplayButtonEventListeners(0, [{
+        buttonIndex: 12,
+        lockTargetWhilePressed: true,
+        tapTarget: document.querySelector('.touch-control.gas'),
+    }]);
+
+    // Brake / reverse — DPad Down, held while pressed
+    emulator.AddDisplayButtonEventListeners(0, [{
+        buttonIndex: 13,
+        lockTargetWhilePressed: true,
+        tapTarget: document.querySelector('.touch-control.brake'),
     }]);
 }
 

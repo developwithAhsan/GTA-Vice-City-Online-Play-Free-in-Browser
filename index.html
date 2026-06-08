@@ -152,6 +152,12 @@
             SAVE MANAGER
           </button>
 
+          <!-- Touch Controls Toggle -->
+          <div class="vc-fps-row">
+            <label class="vc-fps-label" for="touch-controls-toggle">TOUCH CONTROLS:</label>
+            <button id="touch-controls-toggle" class="vc-touch-toggle" type="button" aria-label="Toggle on-screen touch controls">AUTO</button>
+          </div>
+
           <!-- FPS Limit -->
           <div class="vc-fps-row">
             <label class="vc-fps-label" for="fps-limit-input">FPS LIMIT:</label>
@@ -325,8 +331,8 @@
       <div class="touch-control radio">◀ RADIO ▶</div>
       <div class="touch-control fireRight"></div>
       <div class="touch-control fireLeft"></div>
-      <div class="touch-control left"></div>
-      <div class="touch-control right"></div>
+      <div class="touch-control gas"></div>
+      <div class="touch-control brake"></div>
     </div>
 
     <!-- Cheat keyboard overlay -->
@@ -397,6 +403,25 @@
         if (saveBtn) {
           saveBtn.addEventListener('click', () => {
             alert('Save Manager: Upload a .b save file from your PC or PS2 to resume your progress, or download your current save as a backup.');
+          });
+        }
+
+        // Touch controls toggle: cycles AUTO → ON → OFF → AUTO
+        const touchBtn = document.getElementById('touch-controls-toggle');
+        if (touchBtn) {
+          const STATES = ['auto', 'on', 'off'];
+          const LABELS = { auto: 'AUTO', on: 'ON', off: 'OFF' };
+          const stored = localStorage.getItem('vcsky.touchControls') || 'auto';
+          let current = STATES.includes(stored) ? stored : 'auto';
+          const apply = () => {
+            touchBtn.textContent = LABELS[current];
+            touchBtn.dataset.state = current;
+            localStorage.setItem('vcsky.touchControls', current);
+          };
+          apply();
+          touchBtn.addEventListener('click', () => {
+            current = STATES[(STATES.indexOf(current) + 1) % STATES.length];
+            apply();
           });
         }
       });

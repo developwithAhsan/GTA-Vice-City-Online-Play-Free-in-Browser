@@ -316,6 +316,25 @@ body.gameIsStarted .intro-container {
   border-color: var(--border-hi);
 }
 
+/* ─── Touch controls toggle ───────────────────────────────── */
+.vc-touch-toggle {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  min-width: 60px;
+  text-align: center;
+}
+.vc-touch-toggle:hover { background: #243050; border-color: var(--border-hi); }
+.vc-touch-toggle[data-state="on"]  { border-color: var(--success); color: var(--success); }
+.vc-touch-toggle[data-state="off"] { border-color: var(--danger);  color: var(--danger);  }
+
 /* ─── FPS row ─────────────────────────────────────────────── */
 .vc-fps-row {
   display: flex;
@@ -1015,6 +1034,31 @@ body.gameIsStarted .touch-control {
   border-radius: 8px;
 }
 .gameIsStarted[data-is-touch="1"][data-state-car="1"][data-state-menu="0"] .touch-control.radio { display: flex; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GAS & BRAKE  —  bottom-right, shown only in car
+   ═══════════════════════════════════════════════════════════════════════════ */
+.touch-control.gas {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%2390ff90' d='M90 35 L155 135 H25 Z'/%3E%3Ctext x='90' y='165' text-anchor='middle' fill='%2390ff90' font-size='28' font-family='system-ui' font-weight='800'%3EGAS%3C/text%3E%3C/svg%3E");
+  right: 4vmin; bottom: 22vmin;
+  width: 16vmin; height: 16vmin;
+  border-color: rgba(100, 255, 100, 0.45);
+  font-size: 0;
+}
+.touch-control.gas:active { background-color: rgba(30, 120, 30, 0.85); border-color: rgba(100, 255, 100, 0.85); }
+
+.touch-control.brake {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' viewBox='0 0 180 180'%3E%3Cpath fill='%23ff8080' d='M90 135 L155 45 H25 Z'/%3E%3Crect x='25' y='148' width='130' height='14' rx='7' fill='%23ff8080'/%3E%3C/svg%3E");
+  right: 4vmin; bottom: 5vmin;
+  width: 16vmin; height: 16vmin;
+  border-color: rgba(255, 120, 120, 0.45);
+  font-size: 0;
+}
+.touch-control.brake:active { background-color: rgba(120, 30, 30, 0.85); border-color: rgba(255, 120, 120, 0.85); }
+
+/* Show gas/brake only in car, during gameplay */
+.gameIsStarted[data-is-touch="1"][data-state-car="1"][data-state-menu="0"][data-state-cutscene="0"] .touch-control.gas,
+.gameIsStarted[data-is-touch="1"][data-state-car="1"][data-state-menu="0"][data-state-cutscene="0"] .touch-control.brake { display: flex; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    JOYSTICK ZONES

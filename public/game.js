@@ -147,25 +147,38 @@ async function loadData() {
 
     const reader = response.body.getReader();
     let receivedLength = 0;
-    let chunks = [];
+
+    // Pre-allocate when content-length is known — halves peak RAM vs chunk array + concatenation.
+    const contentLength = parseInt(response.headers.get('content-length') || '0', 10);
+    if (contentLength > 0) {
+        const buffer = new Uint8Array(contentLength);
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            buffer.set(value, receivedLength);
+            receivedLength += value.length;
+            if (typeof setStatus === 'function') {
+                setStatus(`Downloading...(${receivedLength}/${dataSize})`);
+            }
+        }
+        return buffer;
+    }
+
+    // Fallback: collect chunks then concatenate (content-length unavailable)
+    const chunks = [];
     while (true) {
         const { done, value } = await reader.read();
-        if (done) {
-            break;
-        }
+        if (done) break;
         chunks.push(value);
         receivedLength += value.length;
-        if (typeof setStatus === "function") {
+        if (typeof setStatus === 'function') {
             setStatus(`Downloading...(${receivedLength}/${dataSize})`);
         }
     }
-    let buffer = new Uint8Array(receivedLength);
+    const buffer = new Uint8Array(receivedLength);
     let position = 0;
-    for (let chunk of chunks) {
-        buffer.set(chunk, position);
-        position += chunk.length;
-    }
-    return new Uint8Array(buffer.buffer);
+    for (const chunk of chunks) { buffer.set(chunk, position); position += chunk.length; }
+    return buffer;
 };
 
 function setupVisualJoysticks() {
@@ -405,9 +418,30 @@ async function loadGame(data) {
         const module = await WebAssembly.instantiate(wasm, info);
         return receiveInstance(module.instance, module);
     };
-    window.onerror = (message) => {
-        Module.setStatus(`Error: ${message}`);
-        spinnerElement.hidden = true;
+    window.onerror = (message, source, lineno, colno, error) => {
+        const text = error?.message || message || 'Unknown error';
+        Module.setStatus(`Error: ${text}`);
+        if (spinnerElement) spinnerElement.hidden = true;
+        // Show the crash overlay so the user knows what happened
+        const overlay = document.getElementById('crash-overlay');
+        const msgEl = document.getElementById('crash-msg');
+        if (overlay) {
+            if (msgEl) msgEl.textContent = text.length > 200 ? text.slice(0, 200) + '…' : text;
+            overlay.classList.remove('hidden');
+        }
+    };
+    window.onunhandledrejection = (event) => {
+        const text = event.reason?.message || String(event.reason) || 'Unknown error';
+        // Only surface WASM / game-critical errors (ignore minor async failures)
+        if (text.includes('abort') || text.includes('OOM') || text.includes('out of memory') ||
+            text.includes('WebAssembly') || text.includes('RuntimeError')) {
+            const overlay = document.getElementById('crash-overlay');
+            const msgEl = document.getElementById('crash-msg');
+            if (overlay) {
+                if (msgEl) msgEl.textContent = text.length > 200 ? text.slice(0, 200) + '…' : text;
+                overlay.classList.remove('hidden');
+            }
+        }
     };
     Module.arguments = window.location.search
         .slice(1)

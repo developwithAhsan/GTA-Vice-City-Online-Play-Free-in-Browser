@@ -189,6 +189,19 @@
       <span>Turn your device sideways for the best experience</span>
     </div>
 
+    <!-- Crash / fatal error overlay (shown when game fails after launching) -->
+    <div id="crash-overlay" class="crash-overlay hidden" role="alert" aria-live="assertive">
+      <div class="crash-box">
+        <p class="crash-title">⚠ Game Error</p>
+        <p class="crash-msg" id="crash-msg">The game encountered an error and cannot continue.</p>
+        <div class="crash-actions">
+          <button class="crash-btn crash-btn-primary" onclick="location.reload()">↺ Reload page</button>
+          <button class="crash-btn" onclick="document.getElementById('crash-overlay').classList.add('hidden')">Dismiss</button>
+        </div>
+        <p class="crash-hint">If this keeps happening, try setting FPS limit to 30 or use a different browser.</p>
+      </div>
+    </div>
+
     <!-- Game intro + loader (shown during game load sequence) -->
     <div class="wasted-container" hidden aria-hidden="true"></div>
     <div class="intro-container" hidden aria-hidden="true">

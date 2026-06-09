@@ -1291,6 +1291,81 @@ body.gameIsStarted .touch-control {
 video::-webkit-media-controls { display: none !important; }
 video { pointer-events: none; }
 
+/* ─── Crash / fatal-error overlay ─────────────────────────── */
+.crash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0,0,0,0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.crash-box {
+  background: #1a0a0a;
+  border: 1px solid rgba(192,80,80,0.55);
+  border-radius: 10px;
+  padding: 28px 28px 22px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.crash-title {
+  margin: 0;
+  font-family: "Bebas Neue", "Impact", sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+  color: #e07070;
+}
+
+.crash-msg {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #c0a8a8;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.crash-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.crash-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(192,80,80,0.4);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: rgba(192,80,80,0.1);
+  color: #e08080;
+  transition: background 0.15s;
+}
+.crash-btn:hover { background: rgba(192,80,80,0.2); }
+.crash-btn-primary {
+  background: rgba(192,80,80,0.25);
+  border-color: rgba(192,80,80,0.7);
+}
+.crash-btn-primary:hover { background: rgba(192,80,80,0.4); }
+
+.crash-hint {
+  margin: 0;
+  font-size: 0.72rem;
+  color: #806868;
+  line-height: 1.5;
+}
+
 /* ─── Save Manager Modal ───────────────────────────────────── */
 .sm-overlay {
   position: fixed;

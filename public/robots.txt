@@ -1,4 +1,12 @@
 User-agent: *
 Allow: /
+Disallow: /src/
+Disallow: /_dl_tmp/
+
+# Block game asset files from being indexed (large binary files)
+Disallow: /vcbr/
+Disallow: /vcsky/
+
+Crawl-delay: 1
 
 Sitemap: /sitemap.xml

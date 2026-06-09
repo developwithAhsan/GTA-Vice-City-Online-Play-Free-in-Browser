@@ -1,0 +1,198 @@
+# SEO Optimization Prompt for AI - GTA Vice City Online Website
+
+Copy and paste this entire prompt into ChatGPT, Claude, or any AI tool to get comprehensive SEO recommendations.
+
+---
+
+## CONTEXT
+
+I have a website that plays GTA Vice City online in a browser (WebAssembly-based, no download needed).
+
+**Website URL:** gtavicecityonline.vercel.app (or your new domain once purchased)
+
+**Website Type:** Browser-based game platform
+
+**Main Goal:** Rank #1 on Google for GTA Vice City online keywords and beat competitors like quenq.in and quenq.com
+
+**Current Status:** 
+- Just launched
+- Minimal backlinks
+- Basic on-page SEO setup
+- Single landing page
+
+---
+
+## TARGET KEYWORDS (21 priority keywords)
+
+Please optimize content for these exact keywords:
+
+1. gta vice city online
+2. gta vice city online free
+3. gta vice city online game
+4. gta vice city online free browser game
+5. gta vice city online multiplayer
+6. gta vice city online for pc
+7. gta vice city online gameplay
+8. gta vice city online download guide
+9. play gta vice city online
+10. play gta vice city online without download
+11. play gta vice city free online
+12. online gta vice city game
+13. online gta vice city play free
+14. online free gta vice city game
+15. online free play gta vice city
+16. online games gta vice city
+17. online games like gta vice city
+18. online games play gta vice city
+19. games similar to gta vice city online
+20. best online games like gta vice city
+21. free open world games like gta vice city
+22. how to install gta vice city online
+23. jogar gta vice city online
+
+---
+
+## COMPETITOR ANALYSIS
+
+**Main Competitors:** quenq.in, quenq.com, plinkod.com
+
+**Their Advantages:**
+- Custom domains (.in, .com)
+- 50+ content pages (guides, cheats, FAQs)
+- Backlinks from Reddit, YouTube, gaming forums
+- Established domain age (2+ years)
+
+**My Advantage:**
+- Real full-featured WebAssembly game (actual playable)
+- Better technical implementation
+- Fresh SEO opportunity (low competition on specific keywords)
+
+---
+
+## WHAT I NEED YOU TO DO
+
+### 1. CONTENT STRATEGY (New Pages to Create)
+
+Create a list of 15-20 new blog/guide pages I should write to:
+- Cover long-tail keyword variations
+- Answer user search intent ("how to", "guides", "cheats", "tips")
+- Target featured snippet opportunities
+- Build topical authority for "GTA Vice City online"
+
+For each page, provide:
+- Page title (with target keyword)
+- Meta description (160 chars max)
+- 3-5 internal linking opportunities
+- Estimated monthly search volume for the keyword
+
+### 2. ON-PAGE SEO IMPROVEMENTS
+
+For my main landing page (/), create/suggest:
+- Optimized H1 tag
+- Internal linking structure (how to link to new pages)
+- Schema markup improvements (FAQPage, BreadcrumbList, SoftwareApplication)
+- Call-to-action placement for conversions
+- Above-the-fold content priority
+
+### 3. TECHNICAL SEO CHECKLIST
+
+Provide a checklist of 20 essential technical SEO tasks including:
+- sitemap.xml structure
+- robots.txt setup
+- Core Web Vitals optimization
+- Mobile optimization requirements
+- Page speed recommendations
+- Structured data (JSON-LD) additions beyond what I have
+
+### 4. BACKLINK STRATEGY
+
+Create a backlink acquisition plan that includes:
+- 10 specific Reddit subreddits to post on (with post title ideas)
+- 8 gaming directories/websites to submit to (itch.io, CrazyGames, etc.)
+- 5 high-authority gaming blogs/forums to reach out to
+- 3 social media platforms with content ideas (YouTube, TikTok, Twitter/X)
+- Email outreach templates for getting featured on gaming lists
+
+### 5. BLOG POST IDEAS
+
+Create 5 COMPLETE blog post outlines (with keyword targets) for:
+- "How to install GTA Vice City online" (target: how-to searchers)
+- "GTA Vice City cheat codes & secrets" (target: user retention)
+- "GTA Vice City vs San Andreas online" (target: comparison searches)
+- "Best free open world games like GTA Vice City" (target: similar game seekers)
+- "GTA Vice City missions walkthrough" (target: gameplay help)
+
+Each outline should have:
+- Keyword focus
+- 2,000-word structure
+- 3-5 subheadings
+- What content unique to my site I can add
+- Internal linking points
+
+### 6. CONVERSION OPTIMIZATION
+
+Suggest:
+- Where to place CTAs (Play Now button, Discord community links)
+- What user engagement metrics matter most
+- How to reduce bounce rate
+- Long-term user retention strategies
+
+---
+
+## DELIVERABLE FORMAT
+
+Please provide your response in this exact order:
+
+1. **Content Strategy** — List of 15-20 new pages with titles, keywords, intent
+2. **On-Page SEO** — Specific changes to main page meta tags, H1, schema
+3. **Technical SEO Checklist** — Numbered list, ready to implement
+4. **Backlink Plan** — Actionable Reddit posts, directories, and outreach
+5. **Sample Blog Outline** — Pick your best idea and give full outline
+6. **Quick Wins** — Top 5 fastest things to implement this week for immediate impact
+
+---
+
+## IMPORTANT CONSTRAINTS
+
+- All content must be unique, helpful, and user-focused (not AI-generated spam)
+- Target searcher intent, not just keywords
+- Avoid Google penalties (no black hat tactics)
+- Focus on ranking against quenq.in/quenq.com specifically
+- Content should highlight that this is the REAL full-featured GTA Vice City game
+- Must work for both desktop and mobile users
+- Consider international audience (English-speaking countries)
+
+---
+
+## ADDITIONAL INFO ABOUT MY SITE
+
+- **Game Type:** Full single-player GTA Vice City experience
+- **Technology:** WebAssembly (WASM) compiled game
+- **Features:** Save/load, missions, open world, vehicles, gameplay exactly like original
+- **Device Support:** Desktop (Chrome, Firefox, Safari), Mobile (landscape mode)
+- **Unique Selling Point:** No download, no installation, play instantly in browser
+- **Performance:** Optimized for 30 FPS on low-end devices
+
+---
+
+## QUESTIONS FOR THE AI
+
+After providing the above, please answer these:
+
+1. **Timeline:** How long should it take to rank #1 if I implement everything?
+2. **Quick Wins:** What 3 things will have the most impact in the first 30 days?
+3. **Risk Factors:** What could prevent me from ranking?
+4. **Domain Strategy:** Should I keep vercel.app or buy a custom domain? Which?
+5. **Monitoring:** What metrics should I track weekly to know if it's working?
+
+---
+
+## END OF PROMPT
+
+Use this with ChatGPT, Claude, or Gemini and ask follow-up questions based on their responses.
+
+Example follow-ups:
+- "Give me 20 Reddit post titles for r/GTA"
+- "Write a 2,000 word blog post for [topic]"
+- "Create a JSON-LD schema for [page type]"
+- "Give me outreach email templates for gaming websites"

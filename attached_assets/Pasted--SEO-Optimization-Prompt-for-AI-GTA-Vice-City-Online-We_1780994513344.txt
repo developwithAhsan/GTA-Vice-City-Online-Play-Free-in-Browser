@@ -1,0 +1,391 @@
+# SEO Optimization Prompt for AI - GTA Vice City Online Website
+
+Copy and paste this entire prompt into ChatGPT, Claude, or any AI tool to get comprehensive SEO recommendations.
+
+---
+
+## CONTEXT
+
+I have a website that plays GTA Vice City online in a browser (WebAssembly-based, no download needed).
+
+**Website URL:** gtavicecityonline.vercel.app (or your new domain once purchased)
+
+**Website Type:** Browser-based game platform
+
+**Main Goal:** Rank #1 on Google for GTA Vice City online keywords and beat competitors like quenq.in and quenq.com
+
+**Current Status:** 
+- Just launched
+- Minimal backlinks
+- Basic on-page SEO setup
+- Single landing page
+
+---
+
+## TARGET KEYWORDS — PRIORITIZED STRATEGY
+
+### TIER 1: PRIMARY KEYWORDS (Your core 21 keywords — Target Month 4+)
+
+These are competitive but highest value. Rank these AFTER building domain authority:
+
+1. gta vice city online
+2. gta vice city online free
+3. gta vice city online game
+4. gta vice city online free browser game
+5. gta vice city online multiplayer
+6. gta vice city online for pc
+7. gta vice city online gameplay
+8. gta vice city online download guide
+9. play gta vice city online
+10. play gta vice city online without download
+11. play gta vice city free online
+12. online gta vice city game
+13. online gta vice city play free
+14. online free gta vice city game
+15. online free play gta vice city
+16. online games gta vice city
+17. online games like gta vice city
+18. online games play gta vice city
+19. games similar to gta vice city online
+20. best online games like gta vice city
+21. free open world games like gta vice city
+22. how to install gta vice city online
+23. jogar gta vice city online
+
+---
+
+### TIER 2: QUICK WIN KEYWORDS (Easy to rank — Target Month 1-2)
+
+These have lower competition and rank in 2-3 weeks. START HERE:
+
+**Cheat Codes & Secrets (High search volume, Easy ranking):**
+- gta vice city cheat codes
+- gta vice city cheats pc
+- tommy vercetti cheats
+- vice city infinite health cheat
+- flying car cheat gta vice city
+- vice city money cheat
+- gta vice city tank spawn cheat
+- vice city weapon cheats
+- gta vc cheat codes
+- cheat codes for gta vice city
+
+**Mobile & Browser (Growing searches, Less competition):**
+- gta vice city android
+- gta vice city ios gameplay
+- vice city on chrome
+- play gta vice city mobile
+- gta vice city emulator online
+- vice city wasm game browser
+- gta vice city mobile free
+- vice city game android download
+
+**Mission Help (High intent, Conversion-focused):**
+- gta vice city mission walkthrough
+- vice city missions list
+- gta vice city missions guide
+- how to beat vice city missions
+- vice city final mission
+- steal the deal mission gta vice city
+
+---
+
+### TIER 3: MEDIUM DIFFICULTY KEYWORDS (Medium competition — Target Month 2-3)
+
+These take 4-8 weeks. Rank these after TIER 2 success:
+
+**Game Comparisons (Great for backlinks):**
+- gta vice city vs san andreas
+- gta vice city vs gta 5
+- is gta vice city better than gta 3
+- gta vice city vs vice city stories
+- open world games like gta vice city comparison
+
+**Character & Story:**
+- tommy vercetti character
+- gta vice city characters
+- vice city story explained
+- gta vice city 1986 setting
+
+**Guides & Tips:**
+- gta vice city best locations
+- vice city secret missions
+- gta vice city easter eggs
+- how to get tank gta vice city
+- best weapons gta vice city
+- gta vice city wanted level tips
+
+**Mod & Customization:**
+- gta vice city mod installation
+- vice city graphics mod
+- gta vice city high fps settings
+- best controls for vice city gameplay
+
+---
+
+### TIER 4: LONG-TAIL GOLDMINES (Very easy — Target ongoing)
+
+These are ultra-specific. Almost no competition. Rank immediately:
+
+- how to get tank in vice city
+- gta vice city wanted level cheat
+- vice city mission order list
+- best vice city weapons ranked
+- gta vice city all safehouses locations
+- vice city free mode tips
+- tommy vercetti outfit unlock
+- gta vice city money mission
+- vice city property guide
+- where to find tank gta vice city
+- gta vice city best cars
+- vice city all radio stations
+
+---
+
+## KEYWORD RANKING STRATEGY (Month-by-Month Priority)
+
+### WHY THIS MATTERS:
+Targeting all 100+ keywords at once = slow ranking. Targeting easy keywords first = fast wins = domain authority grows = hard keywords rank faster.
+
+### MONTH 1 PRIORITY: TIER 2 Keywords (Quick Wins)
+**Goal:** Create 5-6 pages targeting easy, high-intent keywords
+
+**Target these first:**
+1. "gta vice city cheat codes" (50K+ searches/month)
+2. "gta vice city mission walkthrough" (30K+ searches/month)
+3. "tommy vercetti cheats" (10K+ searches/month)
+4. "flying car cheat vice city" (8K+ searches/month)
+5. "gta vice city android" (15K+ searches/month)
+
+**Why:** These rank in 2-3 weeks = fast confidence = social proof = easy to get Reddit backlinks
+
+### MONTH 2-3 PRIORITY: TIER 3 Keywords (Medium Difficulty)
+**Goal:** Create 8-10 pages building on Month 1 success
+
+**Target these:**
+1. "gta vice city vs san andreas" (25K+ searches/month)
+2. "gta vice city vs gta 5" (15K+ searches/month)
+3. "gta vice city guides" (20K+ searches/month)
+4. Character & story pages (10-15K searches each)
+
+**Why:** Your domain now has authority = these rank in 4-8 weeks = each page builds more authority
+
+### MONTH 4+ PRIORITY: TIER 1 Keywords (Competitive, High Value)
+**Goal:** Now attack your 21 main keywords
+
+**Why:** You now have:
+- 20+ pages ranking
+- 50+ backlinks
+- 6+ months of positive signals
+- Higher domain trust
+= Your main keywords rank MUCH faster (8-16 weeks instead of 6+ months)
+
+### TIER 4: Ongoing (Continuous)
+**Goal:** Long-tail keywords rank as you create more content
+
+**Why:** These have almost no competition. Each new piece of content naturally ranks for 5-10 long-tail variations.
+
+**Main Competitors:** quenq.in, quenq.com, plinkod.com
+
+**Their Advantages:**
+- Custom domains (.in, .com)
+- 50+ content pages (guides, cheats, FAQs)
+- Backlinks from Reddit, YouTube, gaming forums
+- Established domain age (2+ years)
+
+**My Advantage:**
+- Real full-featured WebAssembly game (actual playable)
+- Better technical implementation
+- Fresh SEO opportunity (low competition on specific keywords)
+
+---
+
+## WHAT I NEED YOU TO DO
+
+### 1. CONTENT STRATEGY (New Pages to Create — Prioritized)
+
+**FIRST:** Create a content roadmap that:
+- Lists 30-40 blog/guide pages (not 100+) 
+- Prioritizes TIER 2 (quick-win) keywords first
+- Then TIER 3 (medium) keywords
+- Finally TIER 1 (hard) keywords by Month 4
+- Includes TIER 4 long-tail naturally in every piece
+
+For EACH page, provide:
+- Page title with target keyword (TIER 2 first)
+- Meta description (160 chars max)
+- Content length needed (1,500 vs 3,000 words?)
+- Estimated time to rank (2-3 weeks vs 8-16 weeks)
+- 3-5 internal linking opportunities
+- Estimated monthly search volume
+- Competition level (Easy/Medium/Hard)
+- Which tier it belongs to (Tier 1-4)
+
+**EXAMPLE FORMAT:**
+```
+Month 1-2 (TIER 2 - Quick Wins):
+1. "GTA Vice City Cheat Codes — Complete List"
+   - Keyword: gta vice city cheat codes
+   - Search volume: 50K/month
+   - Competition: Easy
+   - Ranking time: 2-3 weeks
+   - Word count: 2,500 words
+   - Internal links to: main page, android page, missions page
+
+2. "GTA Vice City Mission Walkthrough — All 40 Missions"
+   - Keyword: gta vice city mission walkthrough
+   - Search volume: 30K/month
+   - Competition: Easy
+   - Ranking time: 3-4 weeks
+   ...
+
+Month 3-4 (TIER 3 - Medium):
+...
+
+Month 5+ (TIER 1 - Main Keywords):
+...
+```
+
+### 2. ON-PAGE SEO IMPROVEMENTS (Updated for New Keywords)
+
+Suggest optimizations for:
+- TIER 2 pages first (these rank faster = test your SEO)
+- How to structure cheat code pages for featured snippets
+- How to structure comparison pages (GTA Vice City vs San Andreas)
+- How to structure mission pages (list format vs detailed guides)
+- Schema markup for: Article, FAQPage, BreadcrumbList, SoftwareApplication, VideoGame
+- Internal linking strategy across all 30+ pages
+
+### 3. TECHNICAL SEO CHECKLIST (Extended for Scale)
+
+Provide checklist including:
+- Site structure for 30+ pages
+- URL slugs for each keyword tier
+- Breadcrumb implementation (for 4+ category levels)
+- Category pages strategy (Cheats, Missions, Guides, Mobile, etc.)
+- Pagination for long lists (50+ cheat codes)
+- How to link Tier 2 → Tier 3 → Tier 1 pages internally
+
+### 4. BACKLINK STRATEGY (Tailored to New Keywords)
+
+Create backlink plan that:
+- Leverages TIER 2 pages for quick Reddit wins (easy to promote)
+- Uses TIER 3 pages for comparison/guest post outreach
+- Builds TIER 1 pages authority through TIER 2/3 links
+- Suggests which keywords to pitch to gaming websites
+- Provides 10 Reddit subreddits + specific post ideas for each tier
+
+### 5. CONTENT OUTLINES (Prioritized by Tier)
+
+Provide COMPLETE outlines for TOP 10 pages (focus on TIER 2):
+
+**TIER 2 (Quick Wins) Outlines:**
+1. "GTA Vice City Cheat Codes" (2,500 words)
+2. "GTA Vice City Mission Walkthrough" (3,000 words)
+3. "Tommy Vercetti Cheats & Tips" (2,000 words)
+4. "Flying Car Cheat in GTA Vice City" (1,500 words)
+5. "GTA Vice City Android Guide" (2,500 words)
+
+**TIER 3 (Medium) Outlines:**
+6. "GTA Vice City vs San Andreas" (3,500 words)
+7. "GTA Vice City vs GTA 5 Comparison" (3,000 words)
+
+Each outline needs:
+- Keyword focus + search volume
+- 2,000+ word structure (Tier 2) or 3,000+ (Tier 3)
+- 5-8 subheadings
+- Internal linking points to other tier pages
+- Featured snippet optimization
+- What makes my version unique vs Quenq
+
+### 6. MONTH-BY-MONTH ACTION PLAN
+
+Provide:
+- **Week 1-2:** Which 2 TIER 2 pages to create
+- **Week 3-4:** Which 2 more TIER 2 pages to create
+- **Month 2:** Switch to TIER 3 pages after seeing TIER 2 results
+- **Month 3:** Continue TIER 3 while monitoring TIER 2 rankings
+- **Month 4+:** Launch TIER 1 pages with built-up authority
+- **Ongoing:** Add TIER 4 long-tail keywords naturally
+
+### 7. CONVERSION OPTIMIZATION
+
+Suggest how to:
+- Link cheat code pages back to play button (user retention)
+- Use mission walkthroughs to keep players engaged (session time)
+- Create "play now" CTAs on comparison pages (Quenq users come to you)
+- Track which page types convert best (stay, click, return)
+
+---
+
+## DELIVERABLE FORMAT
+
+Please provide your response in this exact order:
+
+1. **Content Strategy** — List of 15-20 new pages with titles, keywords, intent
+2. **On-Page SEO** — Specific changes to main page meta tags, H1, schema
+3. **Technical SEO Checklist** — Numbered list, ready to implement
+4. **Backlink Plan** — Actionable Reddit posts, directories, and outreach
+5. **Sample Blog Outline** — Pick your best idea and give full outline
+6. **Quick Wins** — Top 5 fastest things to implement this week for immediate impact
+
+---
+
+## IMPORTANT CONSTRAINTS
+
+- All content must be unique, helpful, and user-focused (not AI-generated spam)
+- Target searcher intent, not just keywords
+- Avoid Google penalties (no black hat tactics)
+- Focus on ranking against quenq.in/quenq.com specifically
+- Content should highlight that this is the REAL full-featured GTA Vice City game
+- Must work for both desktop and mobile users
+- Consider international audience (English-speaking countries)
+
+---
+
+## ADDITIONAL INFO ABOUT MY SITE
+
+- **Game Type:** Full single-player GTA Vice City experience
+- **Technology:** WebAssembly (WASM) compiled game
+- **Features:** Save/load, missions, open world, vehicles, gameplay exactly like original
+- **Device Support:** Desktop (Chrome, Firefox, Safari), Mobile (landscape mode)
+- **Unique Selling Point:** No download, no installation, play instantly in browser
+- **Performance:** Optimized for 30 FPS on low-end devices
+
+---
+
+## QUESTIONS FOR THE AI
+
+After providing the above, please answer these:
+
+1. **Keyword Tier Priority:** Which 5 TIER 2 (quick-win) keywords should I target FIRST to build domain authority fastest?
+
+2. **Timeline:** If I follow the tiered approach (TIER 2 Month 1-2 → TIER 3 Month 3-4 → TIER 1 Month 5+), how fast will I rank #1 for my 21 main keywords?
+
+3. **Content Plan:** Give me a week-by-week plan for Month 1. What pages should I write in Week 1, Week 2, Week 3, Week 4?
+
+4. **Quick Wins:** What are the TOP 3 TIER 2 keywords I should target to see results fastest (2-3 weeks)?
+
+5. **Page Count:** How many pages do I need before my TIER 1 keywords start ranking?
+
+6. **Backlink Strategy:** Which TIER 2 pages are easiest to get Reddit backlinks for? How many Reddit posts should I aim for?
+
+7. **Internal Linking:** How should I link TIER 2 pages → TIER 3 pages → TIER 1 pages to maximize authority flow?
+
+8. **Monitoring:** What metrics should I track weekly to know if the tiered strategy is working?
+
+9. **Risk Assessment:** What could go wrong with this approach? Any risks I should avoid?
+
+10. **Domain Strategy:** Should I still buy a custom domain or use my current Vercel domain? How much will it affect this tiered keyword strategy?
+
+---
+
+## END OF PROMPT
+
+Use this with ChatGPT, Claude, or Gemini and ask follow-up questions based on their responses.
+
+Example follow-ups:
+- "Give me 20 Reddit post titles for r/GTA"
+- "Write a 2,000 word blog post for [topic]"
+- "Create a JSON-LD schema for [page type]"
+- "Give me outreach email templates for gaming websites"

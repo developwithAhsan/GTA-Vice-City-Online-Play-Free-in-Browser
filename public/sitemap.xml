@@ -1,162 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
-  <!-- Main pages -->
-  <url>
-    <loc>/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/privacy.html</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
-    <loc>/terms.html</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
-  </url>
 
-  <!-- Blog posts -->
-  <url>
-    <loc>/blog/gta-vice-city-cheat-codes.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/play-gta-vice-city-browser.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-missions-list.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-hidden-packages.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/best-cars-gta-vice-city.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-map-guide.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-weapons-guide.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-properties.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-radio-stations.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-easter-eggs.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-100-percent.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-unique-stunt-jumps.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-rampages.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-motorcycles.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-vs-san-andreas.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/tommy-vercetti-story.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-tips-beginners.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-story-explained.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-side-missions.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-review-2024.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-wasm-technology.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
-  <url>
-    <loc>/blog/gta-vice-city-wanted-level-guide.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-06-01</lastmod>
-  </url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/</loc>
+  <lastmod>2026-06-09T08:54:51+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-cheat-codes.html</loc>
+  <lastmod>2026-06-09T08:54:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-tips-beginners.html</loc>
+  <lastmod>2026-06-09T08:54:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-missions-list.html</loc>
+  <lastmod>2026-06-09T08:54:53+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-hidden-packages.html</loc>
+  <lastmod>2026-06-09T08:54:53+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/best-cars-gta-vice-city.html</loc>
+  <lastmod>2026-06-09T08:54:53+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-wanted-level-guide.html</loc>
+  <lastmod>2026-06-09T08:54:53+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/</loc>
+  <lastmod>2026-06-09T08:54:53+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/privacy.html</loc>
+  <lastmod>2026-06-09T08:54:54+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/terms.html</loc>
+  <lastmod>2026-06-09T08:54:54+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-100-percent.html</loc>
+  <lastmod>2026-06-09T08:54:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-story-explained.html</loc>
+  <lastmod>2026-06-09T08:54:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-unique-stunt-jumps.html</loc>
+  <lastmod>2026-06-09T08:54:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-rampages.html</loc>
+  <lastmod>2026-06-09T08:54:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-map-guide.html</loc>
+  <lastmod>2026-06-09T08:54:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-motorcycles.html</loc>
+  <lastmod>2026-06-09T08:54:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-side-missions.html</loc>
+  <lastmod>2026-06-09T08:54:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/play-gta-vice-city-browser.html</loc>
+  <lastmod>2026-06-09T08:54:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-weapons-guide.html</loc>
+  <lastmod>2026-06-09T08:54:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-properties.html</loc>
+  <lastmod>2026-06-09T08:54:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-radio-stations.html</loc>
+  <lastmod>2026-06-09T08:54:56+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-easter-eggs.html</loc>
+  <lastmod>2026-06-09T08:54:56+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-vs-san-andreas.html</loc>
+  <lastmod>2026-06-09T08:54:56+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/tommy-vercetti-story.html</loc>
+  <lastmod>2026-06-09T08:54:56+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-review-2024.html</loc>
+  <lastmod>2026-06-09T08:54:56+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-wasm-technology.html</loc>
+  <lastmod>2026-06-09T08:54:56+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
 
 </urlset>

@@ -1,12 +1,8 @@
 User-agent: *
 Allow: /
-Disallow: /src/
-Disallow: /_dl_tmp/
-
-# Block game asset files from being indexed (large binary files)
-Disallow: /vcbr/
-Disallow: /vcsky/
-
+Disallow: /admin
+Disallow: /private
+Disallow: /search?
 Crawl-delay: 1
 
-Sitemap: /sitemap.xml
+Sitemap: https://gtavicecityonline.vercel.app/sitemap.xml

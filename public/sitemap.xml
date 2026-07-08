@@ -1,121 +1,190 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
-  <!-- MAIN PAGE - HIGHEST PRIORITY -->
+
+  <!-- MAIN PAGE -->
   <url>
-    <loc>https://gtavicecityonline.vercel.app/</loc>
-    <lastmod>2026-06-09</lastmod>
+    <loc>https://gtabrowser.vercel.app/</loc>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- TIER 2 QUICK WIN PAGES (Create these FIRST) -->
+  <!-- BLOG INDEX -->
   <url>
-    <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-cheat-codes</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-mission-walkthrough</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://gtavicecityonline.vercel.app/blog/tommy-vercetti-cheats</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://gtavicecityonline.vercel.app/blog/flying-car-cheat-gta-vice-city</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-android</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-infinite-health</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- TIER 3 MEDIUM PAGES (Create these NEXT) -->
-  <url>
-    <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-vs-san-andreas</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-vs-gta-5</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-best-locations</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-easter-eggs</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- TIER 1 MAIN KEYWORDS (Create these LAST - Month 4+) -->
-  <url>
-    <loc>https://gtavicecityonline.vercel.app/blog/gta-vice-city-online-free</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://gtavicecityonline.vercel.app/blog/play-gta-vice-city-online-browser</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- UTILITY PAGES -->
-  <url>
-    <loc>https://gtavicecityonline.vercel.app/blog</loc>
-    <lastmod>2026-06-09</lastmod>
+    <loc>https://gtabrowser.vercel.app/blog/index.html</loc>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- BLOG POSTS -->
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-cheat-codes.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/play-gta-vice-city-browser.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-missions-list.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-vs-san-andreas.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-easter-eggs.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-map-guide.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/best-cars-gta-vice-city.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-100-percent.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-hidden-packages.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-motorcycles.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://gtavicecityonline.vercel.app/privacy</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-properties.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://gtavicecityonline.vercel.app/terms</loc>
-    <lastmod>2026-06-09</lastmod>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-radio-stations.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-rampages.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-review-2024.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-side-missions.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-story-explained.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-tips-beginners.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-unique-stunt-jumps.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-wanted-level-guide.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-wasm-technology.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/gta-vice-city-weapons-guide.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/blog/tommy-vercetti-story.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- UTILITY PAGES -->
+  <url>
+    <loc>https://gtabrowser.vercel.app/privacy.html</loc>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://gtabrowser.vercel.app/terms.html</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 
 </urlset>

@@ -1,14 +1,17 @@
 {
-  "name": "gta-vice-city-wasm",
-  "version": "0.0.0",
-  "private": true,
+  "name": "gta-indexing",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Google Indexing API automation for gtabrowser.vercel.app",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dry-run": "node submit-all.js --dry-run",
+    "submit": "node submit-all.js",
+    "submit:delete": "node submit-all.js --delete",
+    "indexnow": "node submit-indexnow.js",
+    "indexnow:dry-run": "node submit-indexnow.js --dry-run",
+    "submit:all-engines": "node submit-all.js && node submit-indexnow.js"
   },
-  "devDependencies": {
-    "vite": "^8.0.1"
+  "dependencies": {
+    "google-auth-library": "^9.14.2"
   }
 }

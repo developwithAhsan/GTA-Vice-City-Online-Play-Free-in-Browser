@@ -193,7 +193,80 @@
     
     
 </head>
+<script>
+(function () {
+    // Create floating button
+    const btn = document.createElement("button");
+    btn.innerHTML = "💬";
+    btn.style.cssText = `
+        position:fixed;
+        bottom:20px;
+        right:20px;
+        width:60px;
+        height:60px;
+        border:none;
+        border-radius:50%;
+        background:#5865F2;
+        color:#fff;
+        font-size:28px;
+        cursor:pointer;
+        box-shadow:0 5px 15px rgba(0,0,0,.3);
+        z-index:999999;
+    `;
 
+    // Create widget container
+    const box = document.createElement("div");
+    box.style.cssText = `
+        position:fixed;
+        bottom:90px;
+        right:20px;
+        width:350px;
+        height:500px;
+        display:none;
+        border-radius:12px;
+        overflow:hidden;
+        box-shadow:0 10px 30px rgba(0,0,0,.4);
+        z-index:999999;
+        background:#2b2d31;
+    `;
+
+    // Close button
+    const close = document.createElement("button");
+    close.innerHTML = "✕";
+    close.style.cssText = `
+        position:absolute;
+        top:5px;
+        right:5px;
+        width:28px;
+        height:28px;
+        border:none;
+        border-radius:50%;
+        background:red;
+        color:white;
+        cursor:pointer;
+        z-index:2;
+    `;
+
+    // Discord iframe
+    const iframe = document.createElement("iframe");
+    iframe.src = "https://discord.com/widget?id=1524742491486556260&theme=dark";
+    iframe.width = "350";
+    iframe.height = "500";
+    iframe.frameBorder = "0";
+    iframe.allowTransparency = "true";
+    iframe.sandbox = "allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts";
+    iframe.style.border = "0";
+
+    box.appendChild(close);
+    box.appendChild(iframe);
+
+    document.body.appendChild(btn);
+    document.body.appendChild(box);
+
+    btn.onclick = () => box.style.display = "block";
+    close.onclick = () => box.style.display = "none";
+})();
+</script>
   <body
     class="app-body"
     data-is-touch="0"
@@ -425,7 +498,7 @@
           </aside>
 
         </div>
-<iframe src="https://discord.com/widget?id=1524742491486556260&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+
         <!-- Discussion -->
         <section class="vc-section vc-discussion-section">
           <h2 class="vc-section-title">Discussion</h2>
@@ -489,10 +562,84 @@
             </a>
             <a href="mailto:editingking.2977@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email" class="vc-social-link">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M2 4h20c.55 0 1 .45 1 1v14c0 .55-.45 1-1 1H2c-.55 0-1-.45-1-1V5c0-.55.45-1 1-1Zm1.4 2 8.6 6.44L20.6 6H3.4Zm17.6 1.6-8.35 6.26a1 1 0 0 1-1.2 0L3.1 7.6V17.6h17.9V7.6Z"/></svg>
+           
             </a>
           </div>
         </footer>
+<script>
+(function () {
+    // Create floating button
+    const btn = document.createElement("button");
+    btn.innerHTML = "💬";
+    btn.style.cssText = `
+        position:fixed;
+        bottom:20px;
+        right:20px;
+        width:60px;
+        height:60px;
+        border:none;
+        border-radius:50%;
+        background:#5865F2;
+        color:#fff;
+        font-size:28px;
+        cursor:pointer;
+        box-shadow:0 5px 15px rgba(0,0,0,.3);
+        z-index:999999;
+    `;
 
+    // Create widget container
+    const box = document.createElement("div");
+    box.style.cssText = `
+        position:fixed;
+        bottom:90px;
+        right:20px;
+        width:350px;
+        height:500px;
+        display:none;
+        border-radius:12px;
+        overflow:hidden;
+        box-shadow:0 10px 30px rgba(0,0,0,.4);
+        z-index:999999;
+        background:#2b2d31;
+    `;
+
+    // Close button
+    const close = document.createElement("button");
+    close.innerHTML = "✕";
+    close.style.cssText = `
+        position:absolute;
+        top:5px;
+        right:5px;
+        width:28px;
+        height:28px;
+        border:none;
+        border-radius:50%;
+        background:red;
+        color:white;
+        cursor:pointer;
+        z-index:2;
+    `;
+
+    // Discord iframe
+    const iframe = document.createElement("iframe");
+    iframe.src = "https://discord.com/widget?id=1524742491486556260&theme=dark";
+    iframe.width = "350";
+    iframe.height = "500";
+    iframe.frameBorder = "0";
+    iframe.allowTransparency = "true";
+    iframe.sandbox = "allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts";
+    iframe.style.border = "0";
+
+    box.appendChild(close);
+    box.appendChild(iframe);
+
+    document.body.appendChild(btn);
+    document.body.appendChild(box);
+
+    btn.onclick = () => box.style.display = "block";
+    close.onclick = () => box.style.display = "none";
+})();
+</script>
       </div>
     </div>
 

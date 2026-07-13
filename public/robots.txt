@@ -2,7 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /private
-Disallow: /search?
-Crawl-delay: 1
 
-Sitemap: https://gtavicecityonline.vercel.app/sitemap.xml
+
+Sitemap: https://gtabrowser.vercel.app/sitemap.xml

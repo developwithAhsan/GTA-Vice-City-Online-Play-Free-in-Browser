@@ -511,10 +511,12 @@ async function initSetupFlow() {
 
   let downloadUrl = null;
   if (ASSET_RELEASE_URL) {
-    if (import.meta.env.DEV) {
-      downloadUrl = `${BASE}proxy-game-download/game.tar.gz`;
-    } else if (hasCustomUrl) {
+    if (hasCustomUrl) {
+      // Custom URL (e.g. Cloudflare Worker) — use it directly in all environments
       downloadUrl = import.meta.env.VITE_ASSET_URL;
+    } else if (import.meta.env.DEV) {
+      // Dev only: proxy archive.org through Vite to avoid CORS
+      downloadUrl = `${BASE}proxy-game-download/game.tar.gz`;
     } else if (__IS_VERCEL__ || __IS_REPLIT__) {
       downloadUrl = `/api/proxy`;
     } else {

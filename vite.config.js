@@ -11,7 +11,7 @@ function gameDownloadPlugin() {
         }
 
         const targetUrl =
-         "https://archive.org/download/gta-vicecity-wasm-assets/vc-assets.tar.gz";
+         "https://gta-proxy.editingking-2977.workers.dev";
 
         console.log("[game-proxy] starting fetch:", targetUrl);
 

@@ -1,0 +1,6 @@
+name = "gta-vc-proxy"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+
+# The worker streams game assets from archive.org.
+# Free plan is fine — streaming doesn't count against CPU time limits.

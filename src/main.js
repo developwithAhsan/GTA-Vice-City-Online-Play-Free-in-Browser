@@ -515,10 +515,10 @@ async function initSetupFlow() {
       downloadUrl = `${BASE}proxy-game-download/game.tar.gz`;
     } else if (hasCustomUrl) {
       downloadUrl = import.meta.env.VITE_ASSET_URL;
-    } else if (__IS_VERCEL__) {
+    } else if (__IS_VERCEL__ || __IS_REPLIT__) {
       downloadUrl = `/api/proxy`;
     } else {
-      downloadUrl = `${BASE}proxy-game-download/game.tar.gz`;
+      downloadUrl = null; // fall back to file picker
     }
   }
 

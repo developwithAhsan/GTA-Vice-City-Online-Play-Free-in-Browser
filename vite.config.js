@@ -70,6 +70,7 @@ export default defineConfig({
   plugins: [gameDownloadPlugin()],
   define: {
     __IS_VERCEL__: JSON.stringify(!!process.env.VERCEL),
+    __IS_REPLIT__: JSON.stringify(!!process.env.REPL_ID),
   },
   server: {
     host: true,

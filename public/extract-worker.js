@@ -269,34 +269,79 @@ async function extractFromStream(sourceStream, estimatedDecompBytes) {
 
 // ── Download modes ────────────────────────────────────────────────────────────
 
+// Fetch total file size via HEAD request.
+async function getRemoteSize(url) {
+    try {
+        const head = await fetch(url, { method: 'HEAD' });
+        if (head.ok) return parseInt(head.headers.get('content-length') || '0', 10);
+    } catch (_) {}
+    return 0;
+}
+
+// Fetch a single byte range from the server.
+async function fetchRange(url, start, end) {
+    const response = await fetch(url, { headers: { Range: `bytes=${start}-${end}` } });
+    if (!response.ok && response.status !== 206) {
+        throw new Error(`Download failed: HTTP ${response.status}`);
+    }
+    return response;
+}
+
 // MODE A: stream directly from network → decompress → OPFS.
-// Works on ALL devices. Lower peak memory. No resume capability.
+// Downloads in 32 MB chunks so archive.org never sees one 700 MB request
+// (which it throttles / drops). Works on ALL devices. No resume capability.
 async function runStreamingDownload(url) {
     sendProgress({ type: 'progress', phase: 'downloading', pct: 0, loaded: 0, total: 0 }, true);
 
-    let response;
-    try { response = await fetch(url); } catch (err) {
-        throw new Error(`Download failed: ${err.message}`);
-    }
-    if (!response.ok) throw new Error(`Download failed: HTTP ${response.status}`);
-
-    const total = parseInt(response.headers.get('content-length') || '0', 10);
+    const CHUNK = 32 * 1024 * 1024; // 32 MB per range request
+    const total = await getRemoteSize(url);
     let loaded = 0;
 
-    const trackDownload = new TransformStream({
-        transform(chunk, controller) {
-            loaded += chunk.byteLength;
-            const pct = total > 0 ? Math.min(Math.round((loaded / total) * 65), 65) : 0;
-            sendProgress({ type: 'progress', phase: 'downloading', pct, loaded, total });
-            controller.enqueue(chunk);
+    // Build a ReadableStream that stitches together sequential Range requests.
+    const chunkedStream = new ReadableStream({
+        async start(controller) {
+            try {
+                if (total > 0) {
+                    let offset = 0;
+                    while (offset < total) {
+                        const end = Math.min(offset + CHUNK - 1, total - 1);
+                        const resp = await fetchRange(url, offset, end);
+                        const reader = resp.body.getReader();
+                        while (true) {
+                            const { done, value } = await reader.read();
+                            if (done) break;
+                            loaded += value.byteLength;
+                            const pct = Math.min(Math.round((loaded / total) * 65), 65);
+                            sendProgress({ type: 'progress', phase: 'downloading', pct, loaded, total });
+                            controller.enqueue(value);
+                        }
+                        offset += CHUNK;
+                    }
+                } else {
+                    // Size unknown — fall back to a single streaming request
+                    const resp = await fetch(url);
+                    if (!resp.ok) { controller.error(new Error(`Download failed: HTTP ${resp.status}`)); return; }
+                    const reader = resp.body.getReader();
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        loaded += value.byteLength;
+                        sendProgress({ type: 'progress', phase: 'downloading', pct: 0, loaded, total: 0 });
+                        controller.enqueue(value);
+                    }
+                }
+                controller.close();
+            } catch (err) {
+                controller.error(err);
+            }
         }
     });
 
     sendProgress({ type: 'progress', phase: 'extracting', pct: 65, done: 0, total: 0, file: '' }, true);
-    await extractFromStream(response.body.pipeThrough(trackDownload), 0);
+    await extractFromStream(chunkedStream, 0);
 }
 
-// MODE B: download to OPFS temp file, then extract from temp.
+// MODE B: download to OPFS temp file in 32 MB chunks, then extract.
 // Enables resume on interrupted downloads. Requires ~950 MB free storage.
 async function runTempFileDownload(url, resumeOffset, totalBytes) {
     // Open temp writable (with seek for resume)
@@ -314,48 +359,39 @@ async function runTempFileDownload(url, resumeOffset, totalBytes) {
         sendProgress({ type: 'progress', phase: 'downloading', pct: 0, loaded: 0, total: 0 }, true);
     }
 
-    // Fetch remaining bytes
-    const headers = resumeOffset > 0 ? { Range: `bytes=${resumeOffset}-` } : {};
-    let response;
-    try { response = await fetch(url, { headers }); } catch (err) {
+    // Get total size if not already known
+    let contentTotal = totalBytes || await getRemoteSize(url);
+    if (!contentTotal) {
+        // Can't do chunked without knowing size — fall back to streaming
         try { await tempWritable.close(); } catch (_) {}
-        throw new Error(`Download failed: ${err.message}`);
-    }
-
-    let contentTotal = totalBytes;
-    if (response.status === 206) {
-        const cr = response.headers.get('content-range') || '';
-        const m = cr.match(/bytes \d+-\d+\/(\d+)/);
-        contentTotal = m ? parseInt(m[1], 10) : resumeOffset + parseInt(response.headers.get('content-length') || '0', 10);
-    } else if (response.status === 200) {
-        // Server ignored Range — restart fresh
-        contentTotal = parseInt(response.headers.get('content-length') || '0', 10);
-    } else {
-        try { await tempWritable.close(); } catch (_) {}
-        throw new Error(`Download failed: HTTP ${response.status}`);
-    }
-
-    if (!response.ok && response.status !== 206) {
-        try { await tempWritable.close(); } catch (_) {}
-        throw new Error(`Download failed: HTTP ${response.status}`);
+        return runStreamingDownload(url);
     }
 
     await saveTempMeta(url, contentTotal);
 
+    const CHUNK = 32 * 1024 * 1024; // 32 MB per range request
     let loaded = resumeOffset;
-    const reader = response.body.getReader();
-    let countdown = 200;
+    let offset = resumeOffset;
+
     try {
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            await tempWritable.write(value);
-            loaded += value.byteLength;
-            if (contentTotal > 0) {
+        while (offset < contentTotal) {
+            const end = Math.min(offset + CHUNK - 1, contentTotal - 1);
+            let resp;
+            try { resp = await fetchRange(url, offset, end); } catch (err) {
+                throw new Error(`Download failed: ${err.message}`);
+            }
+            const reader = resp.body.getReader();
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                await tempWritable.write(value);
+                loaded += value.byteLength;
+                offset += value.byteLength;
                 const pct = Math.min(Math.round((loaded / contentTotal) * 65), 65);
                 sendProgress({ type: 'progress', phase: 'downloading', pct, loaded, total: contentTotal });
             }
-            if (--countdown <= 0) { countdown = 200; await saveTempMeta(url, contentTotal); }
+            // Save progress after every chunk so retries resume from here
+            await saveTempMeta(url, contentTotal);
         }
     } finally {
         try { await tempWritable.close(); } catch (_) {}

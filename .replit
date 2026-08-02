@@ -9,7 +9,7 @@ stack = "BEST_EFFORT_FALLBACK"
 [userenv]
 
 [userenv.shared]
-VITE_ASSET_URL = "https://archive.org/download/gta-vicecity-wasm-assets/game.tar.gz"
+VITE_ASSET_URL = "https://gta-proxy.editingking-2977.workers.dev/"
 
 [workflows]
 runButton = "Project"

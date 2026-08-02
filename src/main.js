@@ -506,7 +506,7 @@ async function initSetupFlow() {
   // Game not installed — show install button and wait for user to click
   setStorageStatus("Click INSTALL GAME to set up (~701 MB, one-time)", "missing");
 
-  const DEFAULT_ARCHIVE_URL = 'https://archive.org/download/gta-vicecity-wasm-assets/game.tar.gz';
+  const DEFAULT_ARCHIVE_URL = 'https://archive.org/download/gta-vicecity-wasm-assets/vc-assets.tar.gz';
   const hasCustomUrl = import.meta.env.VITE_ASSET_URL && import.meta.env.VITE_ASSET_URL !== DEFAULT_ARCHIVE_URL;
 
   let downloadUrl = null;

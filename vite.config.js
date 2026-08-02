@@ -11,7 +11,7 @@ function gameDownloadPlugin() {
         }
 
         const targetUrl =
-          "https://archive.org/download/gta-vicecity-wasm-assets/game.tar.gz";
+         "https://archive.org/download/gta-vicecity-wasm-assets/vc-assets.tar.gz";
 
         console.log("[game-proxy] starting fetch:", targetUrl);
 

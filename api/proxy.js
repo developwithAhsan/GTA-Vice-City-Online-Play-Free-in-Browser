@@ -3,8 +3,8 @@ export const config = { runtime: 'edge' };
 // Use the archive.org item server directly — different infrastructure from the CDN nginx
 // that blocks cloud provider IPs. Redirect: follow handles the 301 within the same domain.
 // Primary: ia801606 redirects 301 → ia601606/25/items/...
-const PRIMARY_URL = 'https://ia801606.us.archive.org/0/items/gta-vicecity-wasm-assets/game.tar.gz';
-const FALLBACK_URL = 'https://ia601606.us.archive.org/25/items/gta-vicecity-wasm-assets/game.tar.gz';
+const PRIMARY_URL = 'https://ia801606.us.archive.org/0/items/gta-vicecity-wasm-assets/vc-assets.tar.gz';
+const FALLBACK_URL = 'https://ia601606.us.archive.org/25/items/gta-vicecity-wasm-assets/vc-assets.tar.gz';
 
 const FETCH_HEADERS = {
   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',

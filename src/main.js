@@ -1,6 +1,6 @@
 import { initSaveManagerModal } from "./save-manager.js";
 
-const ASSET_RELEASE_URL = import.meta.env.VITE_ASSET_URL || "https://archive.org/download/gta-vicecity-wasm-assets/vc-assets.tar.gz";
+const ASSET_RELEASE_URL = import.meta.env.VITE_ASSET_URL || "https://gta-proxy.editingking-2977.workers.dev/";
 
 const BASE = import.meta.env.BASE_URL;
 

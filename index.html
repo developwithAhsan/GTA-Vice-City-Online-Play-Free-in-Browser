@@ -502,13 +502,17 @@
          <div id="disqus_thread"></div>
       
 
-<script>
-var idcomments_acct = '75abc03b8c6285c7c6ee419f4eee0dff';
-var idcomments_post_id;
-var idcomments_post_url;
+<div id='metype-container' class='iframe-container' data-metype-account-id='1004300' data-metype-host='https://www.metype.com/' data-metype-primary-color='#0000ff' data-metype-bg-color='#ffffff' data-metype-font-color='#4a4a4a'></div>
+<script type='text/javascript'>
+  var metypeContainer = document.getElementById("metype-container"),
+    page_url = metypeContainer.getAttribute("data-metype-page-url");
+  metypeContainer.setAttribute('data-metype-page-url', page_url || window.location.href);
+  metypeContainer.setAttribute('data-metype-window-height', window.innerHeight);
+  metypeContainer.setAttribute('data-metype-screen-width', window.screen.width);
+  talktype(function() {
+    talktype.commentWidgetIframe(metypeContainer);
+  });
 </script>
-<span id="IDCommentsPostTitle" style="display:none"></span>
-
          
         </section>
 

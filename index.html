@@ -582,57 +582,56 @@
         </footer>
 <script>
 (function () {
-    // Create floating button
+    // Floating Discord button
     const btn = document.createElement("button");
-    btn.innerHTML = "💬";
-    btn.style.cssText = `
-        position:fixed;
-        bottom:20px;
-        right:20px;
-        width:60px;
-        height:60px;
-        border:none;
-        border-radius:50%;
-        background:#5865F2;
-        color:#fff;
-        font-size:28px;
-        cursor:pointer;
-        box-shadow:0 5px 15px rgba(0,0,0,.3);
-        z-index:999999;
+    btn.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
+  <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612"/>
+</svg>
     `;
+    btn.style.position = "fixed";
+    btn.style.bottom = "20px";
+    btn.style.right = "20px";
+    btn.style.width = "56px";
+    btn.style.height = "56px";
+    btn.style.borderRadius = "50%";
+    btn.style.background = "#5865F2"; // official Discord blurple
+    btn.style.border = "none";
+    btn.style.display = "flex";
+    btn.style.alignItems = "center";
+    btn.style.justifyContent = "center";
+    btn.style.cursor = "pointer";
+    btn.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
+    btn.style.zIndex = "999999";
 
-    // Create widget container
+    // Widget container
     const box = document.createElement("div");
-    box.style.cssText = `
-        position:fixed;
-        bottom:90px;
-        right:20px;
-        width:350px;
-        height:500px;
-        display:none;
-        border-radius:12px;
-        overflow:hidden;
-        box-shadow:0 10px 30px rgba(0,0,0,.4);
-        z-index:999999;
-        background:#2b2d31;
-    `;
+    box.style.position = "fixed";
+    box.style.bottom = "90px";
+    box.style.right = "20px";
+    box.style.width = "350px";
+    box.style.height = "500px";
+    box.style.display = "none";
+    box.style.borderRadius = "12px";
+    box.style.overflow = "hidden";
+    box.style.boxShadow = "0 10px 30px rgba(0,0,0,.4)";
+    box.style.zIndex = "999999";
+    box.style.background = "#2b2d31";
 
     // Close button
     const close = document.createElement("button");
     close.innerHTML = "✕";
-    close.style.cssText = `
-        position:absolute;
-        top:5px;
-        right:5px;
-        width:28px;
-        height:28px;
-        border:none;
-        border-radius:50%;
-        background:red;
-        color:white;
-        cursor:pointer;
-        z-index:2;
-    `;
+    close.style.position = "absolute";
+    close.style.top = "5px";
+    close.style.right = "5px";
+    close.style.width = "28px";
+    close.style.height = "28px";
+    close.style.border = "none";
+    close.style.borderRadius = "50%";
+    close.style.background = "red";
+    close.style.color = "white";
+    close.style.cursor = "pointer";
+    close.style.zIndex = "2";
 
     // Discord iframe
     const iframe = document.createElement("iframe");
@@ -650,7 +649,7 @@
     document.body.appendChild(btn);
     document.body.appendChild(box);
 
-    btn.onclick = () => box.style.display = "block";
+    btn.onclick = () => box.style.display = box.style.display === "block" ? "none" : "block";
     close.onclick = () => box.style.display = "none";
 })();
 </script>

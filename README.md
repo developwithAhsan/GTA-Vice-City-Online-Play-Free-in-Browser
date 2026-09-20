@@ -255,7 +255,7 @@ Yes. Once the game files are cached in OPFS, the Service Worker serves everythin
 ## Credits
 
 **Browser client port** (OPFS storage, Service Worker, UI, auto-download, mobile touch controls):
-[@joncodeofficial](https://github.com/joncodeofficial)
+[@joncodeofficial](https://github.com/developwithAhsan)
 
 **Based on** [reVCDOS](https://github.com/Lolendor/reVCDOS) by [@Lolendor](https://github.com/Lolendor)
 

@@ -1613,3 +1613,713 @@ video { pointer-events: none; }
   font-size: 0.72rem;
   color: var(--text-3);
 }
+
+
+/* ─── In-game GTA Vice City toolbar + mod manager v1 ───────── */
+:root {
+  --vc-game-toolbar-height: 50px;
+}
+
+.vc-game-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: var(--vc-game-toolbar-height);
+  z-index: 8200;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px max(10px, env(safe-area-inset-right)) 6px max(10px, env(safe-area-inset-left));
+  background: rgba(9, 14, 24, 0.96);
+  border-bottom: 1px solid rgba(110, 150, 210, 0.35);
+  box-shadow: 0 5px 18px rgba(0,0,0,0.42);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: Inter, system-ui, sans-serif;
+  touch-action: manipulation;
+}
+
+body.gameIsStarted .vc-game-toolbar {
+  display: flex;
+}
+
+.vc-game-toolbar-left,
+.vc-game-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.vc-game-toolbar-right {
+  justify-content: flex-end;
+}
+
+.vc-game-toolbar-btn {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px solid rgba(125, 165, 220, 0.38);
+  border-radius: 7px;
+  background: rgba(30, 45, 67, 0.9);
+  color: #dbe8f8;
+  font: 700 11px/1 Inter, system-ui, sans-serif;
+  letter-spacing: .035em;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.vc-game-toolbar-btn:hover,
+.vc-game-toolbar-btn:focus-visible {
+  background: rgba(57, 85, 124, 0.96);
+  border-color: rgba(120, 190, 255, 0.72);
+  color: #fff;
+}
+
+.vc-game-toolbar-btn:active {
+  transform: translateY(1px);
+}
+
+.vc-game-toolbar-btn.danger {
+  border-color: rgba(225, 95, 95, .48);
+  background: rgba(103, 35, 40, .78);
+}
+
+.vc-game-toolbar-btn.danger:hover {
+  background: rgba(145, 47, 53, .92);
+}
+
+.vc-game-toolbar-symbol {
+  min-width: 16px;
+  font-size: 15px;
+  line-height: 1;
+  text-align: center;
+}
+
+body.gameIsStarted canvas.emscripten {
+  top: var(--vc-game-toolbar-height);
+  bottom: 0;
+  height: calc(100dvh - var(--vc-game-toolbar-height)) !important;
+}
+
+body.gameIsStarted #move {
+  top: var(--vc-game-toolbar-height);
+  bottom: 0;
+}
+
+body.gameIsStarted #look {
+  top: var(--vc-game-toolbar-height);
+  bottom: 0;
+}
+
+/* When a toolbar panel or mod manager is open, keep gameplay input behind it inert. */
+body.vc-tool-open #move,
+body.vc-tool-open #look,
+body.vc-tool-open .touch-control {
+  pointer-events: none !important;
+}
+
+.vc-game-tool-panel {
+  position: fixed;
+  z-index: 8300;
+  top: calc(var(--vc-game-toolbar-height) + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(760px, calc(100vw - 24px));
+  max-height: calc(100dvh - var(--vc-game-toolbar-height) - 20px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(100, 150, 215, .45);
+  border-radius: 12px;
+  background: rgba(12, 19, 30, .985);
+  color: #dce6f5;
+  box-shadow: 0 24px 64px rgba(0,0,0,.68);
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.vc-game-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 16px;
+  border-bottom: 1px solid rgba(100, 145, 205, .22);
+  background: rgba(28, 41, 60, .86);
+}
+
+.vc-game-panel-head > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.vc-game-panel-head strong {
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: .08em;
+  color: #fff;
+}
+
+.vc-game-panel-head small {
+  color: #89a2be;
+  font-size: 11px;
+}
+
+.vc-game-panel-close,
+.vc-mm-header > button,
+.vc-mm-editor-head > button {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border: 1px solid rgba(255, 120, 120, .45);
+  border-radius: 8px;
+  background: rgba(125, 36, 42, .6);
+  color: #fff;
+  font-size: 21px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.vc-game-cheat-search,
+.vc-mm-toolbar,
+.vc-mm-workspace-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(95, 135, 185, .18);
+}
+
+.vc-game-cheat-search input,
+.vc-mm-toolbar input[type="search"],
+.vc-mm-workspace-meta input {
+  min-width: 0;
+  flex: 1;
+  height: 36px;
+  border: 1px solid #334a68;
+  border-radius: 7px;
+  background: #0c1420;
+  color: #e8f1ff;
+  padding: 0 11px;
+  outline: none;
+}
+
+.vc-game-cheat-search span,
+.vc-mm-toolbar span,
+.vc-mm-workspace-meta span {
+  color: #86a0bc;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.vc-game-cheat-scroll {
+  overflow: auto;
+  padding: 12px;
+}
+
+.vc-game-cheat-group + .vc-game-cheat-group {
+  margin-top: 16px;
+}
+
+.vc-game-cheat-group h3 {
+  margin: 0 0 7px;
+  color: #ff7fc5;
+  font: 700 12px/1 Inter, system-ui, sans-serif;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.vc-game-cheat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.vc-game-cheat-item {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  padding: 9px 10px;
+  border: 1px solid rgba(86, 130, 182, .3);
+  border-radius: 7px;
+  background: #162337;
+  color: #dce9f8;
+  cursor: pointer;
+  text-align: left;
+}
+
+.vc-game-cheat-item:hover {
+  border-color: #4c8bc9;
+  background: #1d3150;
+}
+
+.vc-game-cheat-item span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.vc-game-cheat-item code {
+  flex: 0 0 auto;
+  color: #ffd166;
+  font-size: 9px;
+}
+
+.vc-game-panel-status,
+.vc-mm-status {
+  min-height: 38px;
+  padding: 10px 12px;
+  border-top: 1px solid rgba(100, 145, 205, .18);
+  color: #9db2c9;
+  font-size: 11px;
+}
+
+.vc-game-sensitivity-panel {
+  width: min(520px, calc(100vw - 24px));
+}
+
+.vc-game-sensitivity-control {
+  display: grid;
+  grid-template-columns: 1fr 72px;
+  gap: 14px;
+  align-items: center;
+  padding: 24px 18px 12px;
+}
+
+.vc-game-sensitivity-control input {
+  width: 100%;
+}
+
+.vc-game-sensitivity-control output {
+  border: 1px solid #3f5f83;
+  border-radius: 7px;
+  background: #101d2d;
+  padding: 8px 10px;
+  color: #fff;
+  font-weight: 800;
+  text-align: center;
+}
+
+.vc-game-sensitivity-presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  padding: 0 18px 18px;
+}
+
+.vc-game-sensitivity-presets button,
+.vc-mm-toolbar button,
+.vc-mm-actions button,
+.vc-mm-editor-actions button,
+.vc-mm-tabs button {
+  border: 1px solid #385476;
+  border-radius: 7px;
+  background: #17263a;
+  color: #d7e4f4;
+  padding: 8px 10px;
+  font: 700 10px/1.2 Inter, system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.vc-game-sensitivity-presets button:hover,
+.vc-mm-toolbar button:hover,
+.vc-mm-actions button:hover,
+.vc-mm-editor-actions button:hover,
+.vc-mm-tabs button:hover,
+.vc-mm-tabs button.active {
+  background: #294668;
+  border-color: #578ac0;
+  color: #fff;
+}
+
+.vc-game-more-panel {
+  width: min(430px, calc(100vw - 24px));
+}
+
+.vc-game-more-card {
+  margin: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid #3d5d82;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #192941, #18202e);
+  padding: 15px;
+  color: #fff;
+}
+
+.vc-game-more-card span {
+  color: #91a8c3;
+  font-size: 11px;
+}
+
+/* Mod manager */
+.vc-mm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  background: rgba(3, 7, 12, .82);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+.vc-mm-panel {
+  position: relative;
+  width: min(1000px, 100%);
+  height: min(760px, calc(100dvh - 28px));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #3e5a7b;
+  border-radius: 12px;
+  background: #111b28;
+  color: #d9e4f1;
+  box-shadow: 0 28px 90px rgba(0,0,0,.78);
+}
+
+.vc-mm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #2f4159;
+  background: #182538;
+}
+
+.vc-mm-header > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.vc-mm-header strong {
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: 1.45rem;
+  letter-spacing: .08em;
+  color: #fff;
+}
+
+.vc-mm-header span {
+  color: #839bb7;
+  font-size: 11px;
+}
+
+.vc-mm-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 8px 10px;
+  border-bottom: 1px solid #27394e;
+  background: #111a27;
+}
+
+.vc-mm-tabs button.active {
+  color: #fff;
+  box-shadow: inset 0 -2px 0 #ff3c8e;
+}
+
+.vc-mm-body {
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.vc-mm-toolbar {
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+}
+
+.vc-mm-warning {
+  margin: 8px 10px 0;
+  padding: 8px 10px;
+  border: 1px solid rgba(220, 160, 60, .35);
+  border-radius: 7px;
+  background: rgba(108, 76, 22, .22);
+  color: #d8bd82;
+  font-size: 10px;
+}
+
+.vc-mm-list {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  padding: 10px;
+}
+
+.vc-mm-empty {
+  padding: 28px 16px;
+  color: #6f87a3;
+  text-align: center;
+}
+
+.vc-mm-mod-card,
+.vc-mm-file-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 12px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #263b53;
+  border-radius: 8px;
+  background: #142133;
+}
+
+.vc-mm-mod-card + .vc-mm-mod-card,
+.vc-mm-file-row + .vc-mm-file-row {
+  margin-top: 7px;
+}
+
+.vc-mm-mod-main,
+.vc-mm-file-name {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.vc-mm-mod-main strong,
+.vc-mm-file-name strong {
+  overflow-wrap: anywhere;
+  color: #edf5ff;
+  font-size: 11px;
+}
+
+.vc-mm-mod-main span,
+.vc-mm-file-name span {
+  color: #728ba7;
+  font-size: 9px;
+}
+
+.vc-mm-state {
+  border: 1px solid #41536b;
+  border-radius: 999px;
+  padding: 4px 8px;
+  color: #8ea0b4;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.vc-mm-state.is-on {
+  border-color: rgba(75, 195, 120, .48);
+  background: rgba(50, 135, 82, .18);
+  color: #7fe0a0;
+}
+
+.vc-mm-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.vc-mm-actions button.danger {
+  border-color: rgba(205, 80, 85, .46);
+  background: rgba(105, 36, 42, .42);
+}
+
+.vc-mm-workspace-meta {
+  flex-wrap: wrap;
+}
+
+.vc-mm-workspace-meta strong {
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #fff;
+  font-size: 11px;
+}
+
+.vc-mm-editor {
+  position: absolute;
+  z-index: 4;
+  inset: 56px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #456990;
+  border-radius: 9px;
+  background: #0b121d;
+  box-shadow: 0 20px 70px rgba(0,0,0,.7);
+}
+
+.vc-mm-editor-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 10px;
+  border-bottom: 1px solid #2f425a;
+}
+
+.vc-mm-editor-head strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+}
+
+.vc-mm-editor textarea {
+  min-height: 0;
+  flex: 1;
+  resize: none;
+  border: 0;
+  outline: 0;
+  background: #080e16;
+  color: #d8e5f4;
+  padding: 12px;
+  font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.vc-mm-editor-actions {
+  display: flex;
+  gap: 7px;
+  justify-content: flex-end;
+  padding: 9px;
+  border-top: 1px solid #26394f;
+}
+
+.vc-mm-status.is-error {
+  color: #ff9595;
+}
+
+@media (max-width: 900px) {
+  :root { --vc-game-toolbar-height: 46px; }
+
+  .vc-game-toolbar {
+    gap: 4px;
+    padding-top: max(4px, env(safe-area-inset-top));
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .vc-game-toolbar::-webkit-scrollbar { display: none; }
+
+  .vc-game-toolbar-left,
+  .vc-game-toolbar-right {
+    gap: 4px;
+    flex: 0 0 auto;
+  }
+
+  .vc-game-toolbar-btn {
+    min-width: 40px;
+    min-height: 34px;
+    padding: 6px 8px;
+    gap: 4px;
+  }
+
+  .vc-game-toolbar-label {
+    font-size: 9px;
+  }
+
+  .vc-game-toolbar-symbol {
+    font-size: 14px;
+  }
+
+  .vc-game-cheat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vc-game-cheat-item {
+    min-height: 42px;
+  }
+
+  .vc-game-tool-panel {
+    top: calc(var(--vc-game-toolbar-height) + 4px);
+    width: calc(100vw - 10px);
+    max-height: calc(100dvh - var(--vc-game-toolbar-height) - 8px);
+    border-radius: 9px;
+  }
+
+  .vc-mm-overlay {
+    padding: 4px;
+  }
+
+  .vc-mm-panel {
+    width: 100%;
+    height: calc(100dvh - 8px);
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 620px) {
+  :root { --vc-game-toolbar-height: 44px; }
+
+  .vc-game-toolbar-label {
+    display: none;
+  }
+
+  .vc-game-toolbar-btn {
+    width: 38px;
+    min-width: 38px;
+    padding: 5px;
+  }
+
+  .vc-game-toolbar-symbol {
+    font-size: 16px;
+  }
+
+  .vc-game-toolbar-left,
+  .vc-game-toolbar-right {
+    gap: 3px;
+  }
+
+  .vc-game-panel-head {
+    padding: 11px 12px;
+  }
+
+  .vc-game-cheat-search {
+    align-items: stretch;
+  }
+
+  .vc-game-cheat-search span {
+    display: none;
+  }
+
+  .vc-game-sensitivity-presets {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vc-mm-header {
+    padding: 10px 11px;
+  }
+
+  .vc-mm-header span {
+    display: none;
+  }
+
+  .vc-mm-tabs {
+    overflow-x: auto;
+  }
+
+  .vc-mm-tabs button {
+    flex: 1 0 auto;
+  }
+
+  .vc-mm-mod-card,
+  .vc-mm-file-row {
+    grid-template-columns: 1fr;
+  }
+
+  .vc-mm-state {
+    justify-self: start;
+  }
+
+  .vc-mm-editor {
+    inset: 45px 5px 5px;
+  }
+}

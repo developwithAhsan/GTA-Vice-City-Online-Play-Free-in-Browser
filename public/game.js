@@ -485,9 +485,23 @@ async function loadGame(data) {
 
     const emulator = new GamepadEmulator();
     const gamepad = emulator.AddEmulatedGamepad(null, true);
+
+    const baseMoveDragDistance = isTouch ? 85 : 100;
+    const baseLookDragDistance = 100;
+    const readTouchSensitivity = () => {
+        const fromGlobal = Number(globalThis.__vcTouchSensitivity);
+        if (Number.isFinite(fromGlobal) && fromGlobal > 0) {
+            return Math.max(0.5, Math.min(2, fromGlobal));
+        }
+        const stored = Number(localStorage.getItem('vcsky.touchSensitivity') || 100) / 100;
+        return Number.isFinite(stored) ? Math.max(0.5, Math.min(2, stored)) : 1;
+    };
+    let touchSensitivityScale = readTouchSensitivity();
+    globalThis.__vcTouchSensitivity = touchSensitivityScale;
+
     const gamepadEmulatorConfig = {
         directions: { up: true, down: true, left: true, right: true },
-        dragDistance: isTouch ? 85 : 100,
+        dragDistance: baseMoveDragDistance / touchSensitivityScale,
         tapTarget: move,
         lockTargetWhilePressed: true,
         xAxisIndex: 0,
@@ -497,9 +511,10 @@ async function loadGame(data) {
         invertY: false,
     };
     emulator.AddDisplayJoystickEventListeners(0, [gamepadEmulatorConfig]);
+
     const gamepadEmulatorConfig1 = {
         directions: { up: true, down: true, left: true, right: true },
-        dragDistance: 100,
+        dragDistance: baseLookDragDistance / touchSensitivityScale,
         tapTarget: look,
         lockTargetWhilePressed: true,
         xAxisIndex: 2,
@@ -509,6 +524,16 @@ async function loadGame(data) {
         invertY: false,
     };
     emulator.AddDisplayJoystickEventListeners(0, [gamepadEmulatorConfig1]);
+
+    window.addEventListener('vc-touch-sensitivity', (event) => {
+        const requested = Number(event.detail?.value || 100) / 100;
+        touchSensitivityScale = Number.isFinite(requested)
+            ? Math.max(0.5, Math.min(2, requested))
+            : 1;
+        globalThis.__vcTouchSensitivity = touchSensitivityScale;
+        gamepadEmulatorConfig.dragDistance = baseMoveDragDistance / touchSensitivityScale;
+        gamepadEmulatorConfig1.dragDistance = baseLookDragDistance / touchSensitivityScale;
+    });
 
     emulator.AddDisplayButtonEventListeners(0, [{
         buttonIndex: 9,

@@ -29,6 +29,12 @@ else if (_touchPref === 'off') isTouch = false;
 
 document.body.dataset.isTouch = isTouch ? 1 : 0;
 
+window.addEventListener('vc-touch-controls', (event) => {
+    const enabled = !!event.detail?.enabled;
+    isTouch = enabled;
+    document.body.dataset.isTouch = enabled ? '1' : '0';
+});
+
 const dataSize = 130 * 1024 * 1024;
 const textDecoder = new TextDecoder();
 let haveOriginalGame = true;

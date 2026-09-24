@@ -345,6 +345,7 @@ async function initSetupFlow() {
   };
 
   const runImport = async (file, url) => {
+    document.body.classList.add("vc-game-shell-active");
     errorBox.classList.add("hidden");
     progress.classList.remove("hidden");
     progressLabel.textContent = "Connecting…";
@@ -528,6 +529,7 @@ async function initSetupFlow() {
 
   const startInstall = async () => {
     if (clickToPlayButton.dataset.installMode !== "1") return;
+    document.body.classList.add("vc-game-shell-active");
     clickToPlayButton.disabled = true;
     clickToPlayButton.dataset.installMode = "";
 
@@ -600,10 +602,74 @@ function initOrientationLock() {
   observer.observe(document.body, { attributeFilter: ["class"] });
 }
 
+function initViceCityAboutSlideshow() {
+  const gallery = document.getElementById("vc-about-gallery");
+  if (!gallery) return;
+
+  const slides = Array.from(gallery.querySelectorAll(".vc-about-slide"));
+  const dots = Array.from(gallery.querySelectorAll("[data-vc-slide]"));
+  const prev = gallery.querySelector(".vc-about-prev");
+  const next = gallery.querySelector(".vc-about-next");
+  if (slides.length < 2) return;
+
+  let index = 0;
+  let timer = 0;
+
+  const show = (nextIndex) => {
+    index = (nextIndex + slides.length) % slides.length;
+    slides.forEach((slide, i) => slide.classList.toggle("is-active", i === index));
+    dots.forEach((dot, i) => {
+      const active = i === index;
+      dot.classList.toggle("is-active", active);
+      dot.setAttribute("aria-selected", active ? "true" : "false");
+    });
+  };
+
+  const stop = () => {
+    if (timer) {
+      clearInterval(timer);
+      timer = 0;
+    }
+  };
+
+  const start = () => {
+    stop();
+    timer = window.setInterval(() => show(index + 1), 4200);
+  };
+
+  prev?.addEventListener("click", () => {
+    show(index - 1);
+    start();
+  });
+  next?.addEventListener("click", () => {
+    show(index + 1);
+    start();
+  });
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      show(Number(dot.dataset.vcSlide || 0));
+      start();
+    });
+  });
+
+  gallery.addEventListener("mouseenter", stop);
+  gallery.addEventListener("mouseleave", start);
+  gallery.addEventListener("focusin", stop);
+  gallery.addEventListener("focusout", start);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stop();
+    else start();
+  });
+
+  show(0);
+  start();
+}
+
 async function boot() {
   initCanvasBindings();
   initHostRedirectGuard();
   initOrientationLock();
+  initViceCityAboutSlideshow();
 
   const missing = checkBrowserCompatibility();
   if (missing.length > 0) {

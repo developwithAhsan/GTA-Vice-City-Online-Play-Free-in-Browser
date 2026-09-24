@@ -92,17 +92,32 @@ function setToolOpen(open) {
 
 function closePanels() {
   [cheatPanel, sensitivityPanel, morePanel].forEach(function(panel) {
-    if (panel) panel.classList.add("hidden");
+    if (!panel) return;
+    panel.classList.add("hidden");
+    panel.classList.remove("is-open");
+    panel.setAttribute("aria-hidden", "true");
   });
   setToolOpen(false);
 }
 
 function togglePanel(panel) {
+  if (!panel) return;
   const shouldOpen = panel.classList.contains("hidden");
   closePanels();
   if (shouldOpen) {
     panel.classList.remove("hidden");
+    panel.classList.add("is-open");
+    panel.setAttribute("aria-hidden", "false");
     setToolOpen(true);
+
+    // Keep the opened panel above the install/loading layer and focus it
+    // so touch and mouse users immediately get an interactive surface.
+    requestAnimationFrame(function() {
+      const focusTarget = panel.querySelector("input, button, a, [tabindex]");
+      if (focusTarget && typeof focusTarget.focus === "function") {
+        try { focusTarget.focus({ preventScroll: true }); } catch (_) {}
+      }
+    });
   }
 }
 
@@ -228,6 +243,7 @@ function buildCheatPanel() {
   panel.id = "vc-game-cheats-panel";
   panel.className = "vc-game-tool-panel vc-game-cheats-panel hidden";
   panel.setAttribute("aria-label", "GTA Vice City cheats");
+  panel.setAttribute("aria-hidden", "true");
 
   const categories = [];
   VC_CHEATS.forEach(function(item) {
@@ -427,9 +443,21 @@ export function initGameTools() {
   document.body.appendChild(sensitivityPanel);
   document.body.appendChild(morePanel);
 
-  cheatsBtn.addEventListener("click", function() { togglePanel(cheatPanel); });
-  moreBtn.addEventListener("click", function() { togglePanel(morePanel); });
-  sensitivityBtn.addEventListener("click", function() { togglePanel(sensitivityPanel); });
+  cheatsBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    togglePanel(cheatPanel);
+  });
+  moreBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    togglePanel(morePanel);
+  });
+  sensitivityBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    togglePanel(sensitivityPanel);
+  });
   touchToolbarBtn.addEventListener("click", function() {
     closePanels();
     cycleTouchMode();

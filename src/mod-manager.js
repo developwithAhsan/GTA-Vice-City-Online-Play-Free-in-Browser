@@ -654,6 +654,19 @@ export function initModManager() {
   if (initialized) return;
   initialized = true;
   buildUI();
+
+  // Match the GTA 3 site: expose Mod Manager before the game starts as well.
+  const saveButton = document.getElementById("save-manager-btn");
+  if (saveButton && !document.getElementById("mod-manager-btn")) {
+    const modButton = document.createElement("button");
+    modButton.id = "mod-manager-btn";
+    modButton.className = "vc-btn-secondary";
+    modButton.type = "button";
+    modButton.textContent = "MOD MANAGER";
+    modButton.addEventListener("click", openModManager);
+    saveButton.insertAdjacentElement("afterend", modButton);
+  }
+
   renderMods().catch(function(e) { setStatus(e.message, true); });
 }
 

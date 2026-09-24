@@ -1641,7 +1641,8 @@ video { pointer-events: none; }
   touch-action: manipulation;
 }
 
-body.gameIsStarted .vc-game-toolbar {
+body.gameIsStarted .vc-game-toolbar,
+body.vc-game-shell-active .vc-game-toolbar {
   display: flex;
 }
 
@@ -2426,5 +2427,221 @@ body.vc-tool-open .touch-control {
 
   .vc-mm-download-card .vc-mm-actions button {
     width: 100%;
+  }
+}
+
+
+/* ─── GTA VC shell + About slideshow v3 ───────── */
+
+/* Keep the GTA-style toolbar visible above install/download overlays. */
+body.vc-game-shell-active .vc-game-toolbar {
+  z-index: 10050;
+}
+
+body.vc-game-shell-active #setup-progress:not(.hidden) {
+  top: var(--vc-game-toolbar-height);
+  z-index: 10000;
+  padding-top: 26px;
+}
+
+/* Professional GTA VC wordmark — visible page heading only; SEO head is unchanged. */
+.vc-header {
+  position: relative;
+  overflow: hidden;
+  padding: 20px 0 22px;
+  background:
+    radial-gradient(circle at 25% 30%, rgba(52, 211, 255, .10), transparent 42%),
+    radial-gradient(circle at 76% 55%, rgba(255, 64, 176, .12), transparent 45%);
+}
+
+.vc-header::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: min(280px, 52%);
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, #44d8ff, #ff4faf, transparent);
+  box-shadow: 0 0 14px rgba(255, 76, 174, .42);
+}
+
+.vc-title {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: .10em;
+  margin: 0;
+  font-family: "Bebas Neue", "Impact", "Arial Narrow", sans-serif;
+  font-size: clamp(3rem, 11vw, 5.7rem);
+  font-weight: 400;
+  letter-spacing: .035em;
+  line-height: .92;
+  text-transform: uppercase;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.38));
+}
+
+.vc-title-gta {
+  color: #f3f8ff;
+  text-shadow:
+    0 0 1px #fff,
+    0 0 16px rgba(68,216,255,.26);
+}
+
+.vc-title-vc {
+  background: linear-gradient(135deg, #55ddff 4%, #9e8cff 42%, #ff4faf 72%, #ff9ad4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0 13px rgba(255,79,175,.34));
+}
+
+/* About Vice City slideshow */
+.vc-about-gallery {
+  margin: 0 0 18px;
+}
+
+.vc-about-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid rgba(91, 137, 189, .38);
+  border-radius: 10px;
+  background: #090f18;
+  box-shadow: 0 14px 34px rgba(0,0,0,.28);
+}
+
+.vc-about-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transform: scale(1.025);
+  transition: opacity .75s ease, transform 4.8s ease;
+  pointer-events: none;
+}
+
+.vc-about-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+}
+
+.vc-about-shade {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 45%, rgba(5,9,15,.68) 100%),
+    linear-gradient(90deg, rgba(7,13,22,.20), transparent 38%, transparent 70%, rgba(7,13,22,.12));
+}
+
+.vc-about-caption {
+  position: absolute;
+  z-index: 3;
+  left: 14px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.vc-about-caption strong {
+  font-family: "Bebas Neue", Impact, sans-serif;
+  color: #fff;
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  letter-spacing: .08em;
+  text-shadow: 0 3px 12px rgba(0,0,0,.7);
+}
+
+.vc-about-caption span {
+  color: #b9cae0;
+  font-size: 9px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.vc-about-nav {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  width: 36px;
+  height: 48px;
+  transform: translateY(-50%);
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 8px;
+  background: rgba(8,14,23,.62);
+  color: #fff;
+  font: 300 29px/1 system-ui, sans-serif;
+  cursor: pointer;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+.vc-about-nav:hover {
+  background: rgba(29,48,72,.88);
+  border-color: rgba(85,221,255,.62);
+}
+
+.vc-about-prev { left: 10px; }
+.vc-about-next { right: 10px; }
+
+.vc-about-dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 0 0;
+}
+
+.vc-about-dots button {
+  width: 22px;
+  height: 4px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #32455c;
+  cursor: pointer;
+  transition: width .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.vc-about-dots button.is-active {
+  width: 38px;
+  background: linear-gradient(90deg, #45d9ff, #ff4faf);
+  box-shadow: 0 0 10px rgba(255,79,175,.30);
+}
+
+@media (max-width: 620px) {
+  body.vc-game-shell-active #setup-progress:not(.hidden) {
+    padding-top: 18px;
+  }
+
+  .vc-header {
+    padding-top: 16px;
+  }
+
+  .vc-title {
+    font-size: clamp(3rem, 17vw, 4.7rem);
+  }
+
+  .vc-about-stage {
+    border-radius: 8px;
+  }
+
+  .vc-about-nav {
+    width: 32px;
+    height: 42px;
+  }
+
+  .vc-about-caption {
+    left: 10px;
+    bottom: 9px;
   }
 }

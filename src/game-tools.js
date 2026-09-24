@@ -339,8 +339,14 @@ function buildMorePanel() {
   panel.innerHTML =
     '<div class="vc-game-panel-head"><div><strong>MORE GAMES</strong><small>Other browser game projects.</small></div>' +
     '<button type="button" class="vc-game-panel-close" aria-label="Close">×</button></div>' +
-    '<a class="vc-game-more-card" href="https://gta3browser.vercel.app/" target="_blank" rel="noopener">' +
-    '<strong>GTA 3 Browser</strong><span>Play GTA III in your browser</span></a>';
+    '<div class="vc-game-more-grid">' +
+      '<a class="vc-game-more-card" href="https://gta3browser.vercel.app/" target="_blank" rel="noopener">' +
+        '<strong>GTA 3 Browser</strong><span>Play GTA III in your browser</span>' +
+      '</a>' +
+      '<a class="vc-game-more-card" href="https://doombrowser.vercel.app/" target="_blank" rel="noopener">' +
+        '<strong>Doom Browser</strong><span>Play Doom directly in your browser</span>' +
+      '</a>' +
+    '</div>';
   panel.querySelector(".vc-game-panel-close").addEventListener("click", closePanels);
   return panel;
 }
@@ -386,6 +392,8 @@ export function initGameTools() {
 
   const left = document.createElement("div");
   left.className = "vc-game-toolbar-left";
+  const center = document.createElement("div");
+  center.className = "vc-game-toolbar-center";
   const right = document.createElement("div");
   right.className = "vc-game-toolbar-right";
 
@@ -399,15 +407,19 @@ export function initGameTools() {
   const exitBtn = makeButton("vc-game-exit-btn", "Exit Game", "✕");
   exitBtn.classList.add("danger");
 
-  left.appendChild(cheatsBtn);
   left.appendChild(modsBtn);
-  left.appendChild(moreBtn);
-  right.appendChild(saveBtn);
+  left.appendChild(saveBtn);
+
+  center.appendChild(cheatsBtn);
+  center.appendChild(moreBtn);
+
   right.appendChild(sensitivityBtn);
   right.appendChild(touchToolbarBtn);
   right.appendChild(fullscreenBtn);
   right.appendChild(exitBtn);
+
   toolbar.appendChild(left);
+  toolbar.appendChild(center);
   toolbar.appendChild(right);
 
   document.body.appendChild(toolbar);

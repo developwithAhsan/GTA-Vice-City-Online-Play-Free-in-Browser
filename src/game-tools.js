@@ -70,6 +70,9 @@ let initialized = false;
 let cheatPanel = null;
 let sensitivityPanel = null;
 let morePanel = null;
+let touchToolbarBtn = null;
+
+const TOUCH_STATES = ["auto", "on", "off"];
 
 function closePointerLock() {
   if (document.pointerLockElement) {
@@ -176,6 +179,48 @@ function makeButton(id, label, symbol) {
   button.type = "button";
   button.innerHTML = '<span class="vc-game-toolbar-symbol" aria-hidden="true">' + symbol + '</span><span class="vc-game-toolbar-label">' + label + '</span>';
   return button;
+}
+
+function hasTouchHardware() {
+  return "ontouchstart" in window ||
+    Number(navigator.maxTouchPoints || 0) > 0 ||
+    !!window.matchMedia?.("(pointer: coarse)")?.matches;
+}
+
+function readTouchMode() {
+  const stored = localStorage.getItem("vcsky.touchControls") || "auto";
+  return TOUCH_STATES.includes(stored) ? stored : "auto";
+}
+
+function applyTouchMode(mode) {
+  const normalized = TOUCH_STATES.includes(mode) ? mode : "auto";
+  const enabled = normalized === "on" || (normalized === "auto" && hasTouchHardware());
+  localStorage.setItem("vcsky.touchControls", normalized);
+  document.body.dataset.isTouch = enabled ? "1" : "0";
+
+  const homeButton = document.getElementById("touch-controls-toggle");
+  if (homeButton) {
+    homeButton.textContent = normalized.toUpperCase();
+    homeButton.dataset.state = normalized;
+  }
+
+  if (touchToolbarBtn) {
+    touchToolbarBtn.dataset.state = normalized;
+    touchToolbarBtn.title = "Touch controls: " + normalized.toUpperCase();
+    const label = touchToolbarBtn.querySelector(".vc-game-toolbar-label");
+    if (label) label.textContent = "Touch " + normalized.toUpperCase();
+  }
+
+  window.dispatchEvent(new CustomEvent("vc-touch-controls", {
+    detail: { mode: normalized, enabled: enabled }
+  }));
+  return normalized;
+}
+
+function cycleTouchMode() {
+  const current = readTouchMode();
+  const next = TOUCH_STATES[(TOUCH_STATES.indexOf(current) + 1) % TOUCH_STATES.length];
+  applyTouchMode(next);
 }
 
 function buildCheatPanel() {
@@ -345,19 +390,21 @@ export function initGameTools() {
   right.className = "vc-game-toolbar-right";
 
   const cheatsBtn = makeButton("vc-game-cheats-btn", "Cheats", "★");
-  const moreBtn = makeButton("vc-game-more-btn", "More Games", "🎮");
-  const sensitivityBtn = makeButton("vc-game-sensitivity-btn", "Sensitivity", "◫");
-  const saveBtn = makeButton("vc-game-save-btn", "Save Manager", "▣");
   const modsBtn = makeButton("vc-game-mods-btn", "Mod Manager", "◆");
+  const moreBtn = makeButton("vc-game-more-btn", "More Games", "🎮");
+  const saveBtn = makeButton("vc-game-save-btn", "Save Manager", "▣");
+  const sensitivityBtn = makeButton("vc-game-sensitivity-btn", "Sensitivity", "◫");
+  touchToolbarBtn = makeButton("vc-game-touch-btn", "Touch AUTO", "☝");
   const fullscreenBtn = makeButton("vc-game-fullscreen-btn", "Fullscreen", "⛶");
   const exitBtn = makeButton("vc-game-exit-btn", "Exit Game", "✕");
   exitBtn.classList.add("danger");
 
   left.appendChild(cheatsBtn);
+  left.appendChild(modsBtn);
   left.appendChild(moreBtn);
-  right.appendChild(sensitivityBtn);
   right.appendChild(saveBtn);
-  right.appendChild(modsBtn);
+  right.appendChild(sensitivityBtn);
+  right.appendChild(touchToolbarBtn);
   right.appendChild(fullscreenBtn);
   right.appendChild(exitBtn);
   toolbar.appendChild(left);
@@ -371,6 +418,11 @@ export function initGameTools() {
   cheatsBtn.addEventListener("click", function() { togglePanel(cheatPanel); });
   moreBtn.addEventListener("click", function() { togglePanel(morePanel); });
   sensitivityBtn.addEventListener("click", function() { togglePanel(sensitivityPanel); });
+  touchToolbarBtn.addEventListener("click", function() {
+    closePanels();
+    cycleTouchMode();
+  });
+  applyTouchMode(readTouchMode());
 
   saveBtn.addEventListener("click", function() {
     closePanels();

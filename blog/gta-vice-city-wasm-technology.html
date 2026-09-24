@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>How GTA Vice City Runs in Your Browser: WebAssembly Explained</title>
+<meta name="description" content="How does GTA Vice City run inside a browser tab with no download? A plain-English explanation of WebAssembly, OPFS, Service Workers and the technology that makes browser gaming possible."/>
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="How GTA Vice City Runs in Your Browser: WebAssembly Explained"/>
+<meta property="og:description" content="How a 2002 PC game runs in a browser tab — WebAssembly, OPFS and Service Workers explained simply."/>
+<meta property="og:image" content="/tommy.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/tommy.jpg"/>
+<script>var l=document.createElement('link');l.rel='canonical';l.href=location.origin+'/blog/gta-vice-city-wasm-technology.html';document.head.appendChild(l);</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How GTA Vice City Runs in Your Browser: WebAssembly Explained","description":"Plain-English explanation of how GTA Vice City runs in a browser using WebAssembly, OPFS and Service Workers.","image":"/tommy.jpg","datePublished":"2025-06-01","dateModified":"2025-06-01","author":{"@type":"Organization","name":"GTA Vice City Online"},"publisher":{"@type":"Organization","name":"GTA Vice City Online","logo":{"@type":"ImageObject","url":"/icon.webp"}}}</script>
+<link rel="icon" href="/favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/blog/blog.css"/>
+</head>
+<body>
+<nav class="blog-nav">
+  <a class="blog-nav-logo" href="/">VICE CITY</a>
+  <span class="blog-nav-sep">›</span>
+  <a class="blog-nav-link" href="/blog/">Blog</a>
+  <span class="blog-nav-sep">›</span>
+  <span class="blog-nav-link">Technology</span>
+  <a class="blog-nav-play" href="/">▶ Play Free</a>
+</nav>
+<div class="blog-wrap">
+  <div class="blog-hero">
+    <span class="blog-cat">Tech</span>
+    <h1 class="blog-h1">How GTA Vice City Runs in Your Browser — WebAssembly Explained</h1>
+    <div class="blog-meta">
+      <span>📅 June 2025</span>
+      <span>⏱ 6 min read</span>
+    </div>
+  </div>
+
+  <nav class="blog-toc">
+    <p class="blog-toc-title">Table of Contents</p>
+    <ol>
+      <li><a href="#start">Where It All Starts: The reVC Project</a></li>
+      <li><a href="#wasm">What Is WebAssembly?</a></li>
+      <li><a href="#opfs">How Game Files Are Stored (OPFS)</a></li>
+      <li><a href="#sw">Service Workers: The File System Bridge</a></li>
+      <li><a href="#threads">SharedArrayBuffer and Multi-Threading</a></li>
+    </ol>
+  </nav>
+
+  <div class="blog-body">
+
+    <p>If you've used this site, you know that GTA Vice City runs inside a browser tab with no installation. But how is that actually possible? A game from 2002 — originally a Windows executable using DirectX — running seamlessly inside Chrome? The answer involves several layers of modern web technology working together. Here's how it works, explained in plain English.</p>
+
+    <h2 id="start">Where It All Starts: The reVC Project</h2>
+    <p>GTA Vice City's source code was never released by Rockstar Games. But over the years, a group of dedicated reverse engineers painstakingly disassembled the original Windows executable and reconstructed the game's source code from scratch — a project called <strong>reVC</strong>.</p>
+    <p>The reVC team didn't guess how the code worked. They analysed the compiled binary instruction by instruction, figured out what each function did, and rewrote it in readable C++ that produces identical behaviour to the original. After years of work, they had a fully functional open-source reimplementation of the Vice City engine that could be compiled on any platform — not just Windows.</p>
+    <p>That platform portability is the crucial first step. Once the engine runs on Linux and macOS, it can run anywhere a C++ compiler can target.</p>
+
+    <h2 id="wasm">What Is WebAssembly?</h2>
+    <p>WebAssembly (WASM) is a binary instruction format that modern browsers can execute at near-native speed. Think of it as a compact, efficient version of machine code that all browsers know how to run — regardless of whether you're on Windows, macOS, Android or iOS.</p>
+    <p>Compiling reVC to WebAssembly uses a tool called <strong>Emscripten</strong>. Emscripten takes C++ source code and compiles it to WASM instead of native machine code. The result is a <code>.wasm</code> file that the browser can load and execute.</p>
+    <p>WASM runs at 60–80% of native C++ speed in most benchmarks. For a 2002 game, that's more than enough. Modern CPUs can run GTA Vice City's 2002-era rendering at full speed inside a browser without breaking a sweat.</p>
+    <p>The key insight is this: <strong>the browser is now a universal runtime</strong>. Any program that can be compiled to C or C++ can theoretically be compiled to WASM and run in a browser. Vice City is just one example of what this enables.</p>
+
+    <h2 id="opfs">How Game Files Are Stored: OPFS</h2>
+    <p>GTA Vice City has about 880 MB of game assets — textures, 3D models, audio files, scripts. The browser can't store 880 MB in a cookie or localStorage. Those are tiny, limited storage mechanisms for small data.</p>
+    <p>Instead, the browser version uses <strong>Origin Private File System (OPFS)</strong> — a modern browser API that gives web applications access to a private file system stored locally on your device. Each website that uses OPFS gets its own isolated storage area that only that website can access.</p>
+    <p>On first visit, the game downloads a compressed archive of all the game assets (~700 MB compressed) and extracts them into OPFS. After extraction, ~880 MB of game files live in your browser's private storage. On every subsequent visit, those files are already there — the game loads from local storage instantly, with no internet connection required.</p>
+    <p>OPFS is supported in Chrome, Firefox, Edge and Safari 16.4+. It's a genuine file system — not a database or cache — so files can be read and written at speeds comparable to a local hard drive. This is what makes storing a full game's worth of assets practical.</p>
+
+    <h2 id="sw">Service Workers: The File System Bridge</h2>
+    <p>The WASM game engine needs to read game files the same way a native application would — by opening file paths and reading bytes. But WASM running in a browser can't directly access the file system in the traditional sense; it uses a virtual file system that's mapped to real storage behind the scenes.</p>
+    <p>This is where <strong>Service Workers</strong> come in. A Service Worker is a background script that sits between the browser and network requests. When the game engine requests a file (say, <code>/vcbr/models/generic.img</code>), the Service Worker intercepts that request and returns the file's contents from OPFS instead of making a network request.</p>
+    <p>The result: from the game engine's perspective, it's reading files from a local file server. From the browser's perspective, it's intercepting URL requests. From your perspective, the game just works.</p>
+
+    <h2 id="threads">SharedArrayBuffer and Multi-Threading</h2>
+    <p>Modern games use multiple threads — one for rendering, one for audio, one for physics, one for AI. GTA Vice City was designed this way. WebAssembly supports multi-threading through a browser API called <strong>SharedArrayBuffer</strong>, which lets multiple threads share memory safely.</p>
+    <p>SharedArrayBuffer requires the page to be served with specific security headers:</p>
+    <ul>
+      <li><code>Cross-Origin-Opener-Policy: same-origin</code></li>
+      <li><code>Cross-Origin-Embedder-Policy: require-corp</code></li>
+    </ul>
+    <p>These headers tell the browser that the page is isolated from other origins, which is a prerequisite for enabling shared memory between threads. The Vite development server and any production deployment must set these headers for the game to run. Without them, the WASM threads can't communicate and the game fails to start.</p>
+
+    <h2>The Full Picture</h2>
+    <p>Put it all together and this is how Vice City runs in your browser:</p>
+    <ol>
+      <li>The reVC engine (C++) is compiled to WebAssembly by Emscripten.</li>
+      <li>Game assets are downloaded and stored in OPFS on first visit.</li>
+      <li>A Service Worker intercepts file requests and serves them from OPFS.</li>
+      <li>SharedArrayBuffer enables multi-threaded execution for audio and rendering.</li>
+      <li>WebGL (the browser's GPU API) handles all 3D rendering.</li>
+      <li>The result: a 2002 PC game running at full speed in a browser tab.</li>
+    </ol>
+    <p>This is genuinely impressive engineering, and it opens the door to far more ambitious browser ports in the future. If Vice City can run this way, so can thousands of other classic games.</p>
+
+    <div class="blog-cta">
+      <h3>Experience the technology yourself</h3>
+      <p>Play GTA Vice City free in your browser — the full game, running in a tab.</p>
+      <a href="/">▶ Play Vice City Free</a>
+    </div>
+
+  </div>
+
+  <div class="blog-related">
+    <h2>More Vice City Articles</h2>
+    <div class="blog-related-grid">
+      <a class="blog-related-card" href="/blog/play-gta-vice-city-browser.html"><span>How To</span><strong>How to Play in Your Browser</strong></a>
+      <a class="blog-related-card" href="/blog/gta-vice-city-review-2024.html"><span>Review</span><strong>Vice City Review (2025)</strong></a>
+      <a class="blog-related-card" href="/blog/gta-vice-city-tips-beginners.html"><span>Tips</span><strong>20 Tips for Beginners</strong></a>
+      <a class="blog-related-card" href="/blog/gta-vice-city-cheat-codes.html"><span>Cheats</span><strong>All Cheat Codes</strong></a>
+    </div>
+  </div>
+</div>
+<footer class="blog-footer">
+  <p><a href="/">Play GTA Vice City Free</a> &middot; <a href="/blog/">All Articles</a> &middot; <a href="/privacy.html">Privacy</a></p>
+</footer>
+</body>
+</html>

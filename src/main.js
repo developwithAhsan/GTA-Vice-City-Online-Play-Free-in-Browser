@@ -1,4 +1,6 @@
 import { initSaveManagerModal } from "./save-manager.js";
+import { initModManager } from "./mod-manager.js";
+import { initGameTools } from "./game-tools.js";
 
 const ASSET_RELEASE_URL = import.meta.env.VITE_ASSET_URL || "https://gta-proxy.editingking-2977.workers.dev/";
 
@@ -619,6 +621,8 @@ async function boot() {
   }
 
   initSaveManagerModal();
+  initModManager();
+  initGameTools();
   await initSetupFlow();
   await loadLegacyScripts();
 

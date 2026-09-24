@@ -2738,3 +2738,31 @@ body.vc-game-shell-active #setup-progress:not(.hidden) {
     display: none;
   }
 }
+
+
+/* ─── Cheat panel visibility fix v5 ───────── */
+/* Tool panels must sit above both the install overlay (10000) and toolbar (10050). */
+.vc-game-tool-panel {
+  z-index: 10120;
+  pointer-events: auto;
+}
+
+.vc-game-tool-panel.is-open:not(.hidden) {
+  display: flex !important;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.vc-game-shell-active .vc-game-tool-panel.is-open,
+body.gameIsStarted .vc-game-tool-panel.is-open {
+  z-index: 10120;
+}
+
+body.vc-tool-open #setup-progress:not(.hidden) {
+  pointer-events: none;
+}
+
+#vc-game-cheats-panel.is-open {
+  z-index: 10130;
+}

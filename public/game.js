@@ -279,6 +279,7 @@ function setupVisualJoysticks() {
 
 async function startGame(e) {
     e.stopPropagation();
+    document.body.classList.add('vc-game-shell-active');
     await resumeAudioContexts();
 
     if (isTouch && document.documentElement.requestFullscreen) {

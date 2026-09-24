@@ -352,7 +352,7 @@ close.onclick = () => box.style.display = "none";
 
         <!-- Title -->
         <header class="vc-header">
-          <h1 class="vc-title">GTA Vice City</h1>
+          <h1 class="vc-title" aria-label="GTA VC"><span class="vc-title-gta">GTA</span><span class="vc-title-vc">VC</span></h1>
         </header>
 
         <!-- Setup overlay (functional hook — keeps JS working) -->
@@ -421,6 +421,26 @@ close.onclick = () => box.style.display = "none";
 
             <section class="vc-section">
               <h2 class="vc-section-title">About Vice City Web Edition</h2>
+              <div class="vc-about-gallery" id="vc-about-gallery" aria-label="GTA Vice City screenshots">
+                <div class="vc-about-stage">
+                  <img class="vc-about-slide is-active" src="/hero-bg.jpg" alt="GTA Vice City neon city artwork" loading="eager" decoding="async" />
+                  <img class="vc-about-slide" src="/tommy.jpg" alt="Tommy Vercetti in GTA Vice City" loading="lazy" decoding="async" />
+                  <img class="vc-about-slide" src="/poster.jpg" alt="GTA Vice City browser gameplay artwork" loading="lazy" decoding="async" />
+                  <img class="vc-about-slide" src="./attached_assets/Screenshot_2026-05-22-15-01-08-81_1779444976897.jpg" alt="GTA Vice City gameplay screenshot" loading="lazy" decoding="async" />
+                  <img class="vc-about-slide" src="./attached_assets/Screenshot_2026-05-22-15-01-19-66_1779444976762.jpg" alt="GTA Vice City gameplay scene" loading="lazy" decoding="async" />
+                  <div class="vc-about-shade" aria-hidden="true"></div>
+                  <button class="vc-about-nav vc-about-prev" type="button" aria-label="Previous Vice City screenshot">‹</button>
+                  <button class="vc-about-nav vc-about-next" type="button" aria-label="Next Vice City screenshot">›</button>
+                  <div class="vc-about-caption"><strong>VICE CITY</strong><span>Browser Edition • WebAssembly</span></div>
+                </div>
+                <div class="vc-about-dots" role="tablist" aria-label="Choose Vice City screenshot">
+                  <button type="button" class="is-active" data-vc-slide="0" aria-label="Show screenshot 1" aria-selected="true"></button>
+                  <button type="button" data-vc-slide="1" aria-label="Show screenshot 2" aria-selected="false"></button>
+                  <button type="button" data-vc-slide="2" aria-label="Show screenshot 3" aria-selected="false"></button>
+                  <button type="button" data-vc-slide="3" aria-label="Show screenshot 4" aria-selected="false"></button>
+                  <button type="button" data-vc-slide="4" aria-label="Show screenshot 5" aria-selected="false"></button>
+                </div>
+              </div>
               <p>Grand Theft Auto: Vice City Web Edition brings the legendary open world experience of 1986 Miami directly into your browser. Set in a sprawling, neon-soaked metropolis inspired by 1980s Miami, Vice City stands as one of the most iconic environments in gaming history.</p>
               <p>The story follows Tommy Vercetti, a mobster recently released from prison after serving fifteen years. He is sent to Vice City by his former boss Sonny Forelli to oversee a drug deal. When the deal is ambushed and both the money and the drugs are lost, Tommy is left to pick up the pieces.</p>
               <p>As he works to recover what was lost and take revenge on the Forelli family, Tommy becomes involved with the city's various criminal organizations and power players. Over time, he builds his own network of businesses and influence, ultimately rising to control Vice City's criminal underworld.</p>

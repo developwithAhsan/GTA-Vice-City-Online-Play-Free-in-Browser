@@ -2645,3 +2645,96 @@ body.vc-game-shell-active #setup-progress:not(.hidden) {
     bottom: 9px;
   }
 }
+
+
+/* ─── Exact centered game shortcuts v4 ───────── */
+.vc-game-toolbar {
+  position: fixed;
+}
+
+.vc-game-toolbar-left,
+.vc-game-toolbar-right {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 0;
+}
+
+.vc-game-toolbar-left {
+  justify-content: flex-start;
+}
+
+.vc-game-toolbar-right {
+  justify-content: flex-end;
+}
+
+.vc-game-toolbar-center {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transform: translate(-50%, -50%);
+}
+
+.vc-game-more-grid {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+}
+
+.vc-game-more-grid .vc-game-more-card {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .vc-game-toolbar-center {
+    gap: 4px;
+  }
+
+  .vc-game-toolbar-left,
+  .vc-game-toolbar-right {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .vc-game-toolbar-left .vc-game-toolbar-label,
+  .vc-game-toolbar-right .vc-game-toolbar-label {
+    display: none;
+  }
+
+  .vc-game-toolbar-left .vc-game-toolbar-btn,
+  .vc-game-toolbar-right .vc-game-toolbar-btn {
+    width: 36px;
+    min-width: 36px;
+    padding-inline: 5px;
+  }
+}
+
+@media (max-width: 620px) {
+  .vc-game-toolbar-center .vc-game-toolbar-btn {
+    width: auto;
+    min-width: 42px;
+    padding-inline: 6px;
+  }
+
+  .vc-game-toolbar-center .vc-game-toolbar-label {
+    display: none;
+  }
+
+  .vc-game-toolbar-left,
+  .vc-game-toolbar-right {
+    gap: 2px;
+  }
+
+  #vc-game-touch-btn {
+    width: 38px;
+    min-width: 38px;
+  }
+
+  #vc-game-touch-btn .vc-game-toolbar-label {
+    display: none;
+  }
+}

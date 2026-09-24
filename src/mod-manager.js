@@ -4,6 +4,8 @@ const META_FILE = "mods.json";
 const BACKUP_DIR = "backups";
 const TEXT_EXTS = new Set(["txt","cfg","dat","ide","ipl","ini","json","xml","md","log","csv","zon"]);
 const PROTECTED_ROOTS = new Set(["_game_ready", "_dl_tmp", STORE_DIR]);
+const GAME_PROXY_URL = import.meta.env.VITE_ASSET_URL || "https://gta-proxy.editingking-2977.workers.dev/";
+const BASE = import.meta.env.BASE_URL;
 
 let overlay, statusEl, modsList, filesList, filesSearch, filesCount;
 let workspaceList, workspaceSearch, workspaceName, workspaceCount;
@@ -213,6 +215,99 @@ function downloadBlob(blob, name) {
   setTimeout(function() { URL.revokeObjectURL(url); }, 5000);
 }
 
+function normalizeRemoteUrl(value) {
+  let parsed;
+  try {
+    parsed = new URL(String(value || "").trim(), location.href);
+  } catch (_) {
+    throw new Error("Enter a valid download URL.");
+  }
+  if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+    throw new Error("Only HTTP/HTTPS download URLs are supported.");
+  }
+  return parsed.href;
+}
+
+function openArchiveDownload(url) {
+  const href = normalizeRemoteUrl(url);
+  const a = document.createElement("a");
+  a.href = href;
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+  a.download = "vc-assets.tar.gz";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setStatus("Opened game archive download: " + href);
+}
+
+async function installArchiveFromUrl(url) {
+  const href = normalizeRemoteUrl(url);
+  if (!confirm("Install/refresh Vice City game files from this URL? Existing files with the same paths can be replaced.\n\n" + href)) return;
+
+  setStatus("Connecting to game archive...");
+  await new Promise(function(resolve, reject) {
+    const worker = new Worker(BASE + "extract-worker.js");
+    let finished = false;
+
+    function finish(error) {
+      if (finished) return;
+      finished = true;
+      worker.terminate();
+      if (error) reject(error);
+      else resolve();
+    }
+
+    worker.onerror = function(event) {
+      finish(new Error(event.message || "Archive worker crashed."));
+    };
+
+    worker.onmessage = function(event) {
+      const msg = event.data || {};
+      if (msg.type === "progress") {
+        const pct = Number.isFinite(Number(msg.pct)) ? Math.round(Number(msg.pct)) : null;
+        const phase = msg.phase === "extracting" ? "Extracting" :
+          msg.phase === "reading" ? "Reading" :
+          msg.resuming ? "Resuming" : "Downloading";
+        const file = msg.file ? " • " + msg.file : "";
+        setStatus(phase + (pct !== null ? " " + pct + "%" : "") + file);
+        return;
+      }
+      if (msg.type === "done") {
+        finish();
+        return;
+      }
+      if (msg.type === "error") {
+        finish(new Error(msg.message || "Archive install failed."));
+      }
+    };
+
+    worker.postMessage({ url: href });
+  });
+
+  window.__gtaGameReady = true;
+  const play = document.getElementById("click-to-play-button");
+  if (play) {
+    play.disabled = false;
+    play.classList.remove("disabled");
+  }
+  gameFiles = [];
+  await refreshFiles();
+  setStatus("Game files installed/refreshed from the download URL. Reload or restart Vice City before playing.");
+}
+
+async function moveGameFile(oldParts, newParts) {
+  if (!oldParts || !newParts) throw new Error("Invalid file path.");
+  if (PROTECTED_ROOTS.has(oldParts[0]) || PROTECTED_ROOTS.has(newParts[0])) {
+    throw new Error("That path is protected.");
+  }
+  if (oldParts.join("/") === newParts.join("/")) return;
+  if (await exists(newParts) && !confirm("A file already exists at " + newParts.join("/") + ". Replace it?")) return;
+  const file = await readFile(oldParts);
+  await writeFile(newParts, file);
+  await removeFile(oldParts);
+}
+
 async function installZip(file) {
   if (!file || !/\.zip$/i.test(file.name)) throw new Error("Choose a ZIP mod package.");
   setStatus("Inspecting " + file.name + "...");
@@ -307,6 +402,21 @@ async function deleteMod(id) {
   await renderMods();
 }
 
+async function renameMod(id) {
+  const meta = await readMeta();
+  const mod = meta.mods.find(function(item) { return item.id === id; });
+  if (!mod) return;
+  let next = prompt("Rename stored mod ZIP:", mod.name || "vice-city-mod.zip");
+  if (next == null) return;
+  next = next.trim();
+  if (!next) return;
+  if (!/\.zip$/i.test(next)) next += ".zip";
+  mod.name = next;
+  await writeMeta(meta);
+  setStatus("Renamed mod package to " + next + ".");
+  await renderMods();
+}
+
 async function openModWorkspace(id) {
   const meta = await readMeta();
   const mod = meta.mods.find(function(item) { return item.id === id; });
@@ -334,6 +444,7 @@ async function renderMods() {
       '<div class="vc-mm-actions">' +
       '<button type="button" data-action="' + (mod.enabled ? 'disable' : 'apply') + '">' + (mod.enabled ? 'Restore / Disable' : 'Apply') + '</button>' +
       '<button type="button" data-action="workspace">Edit ZIP</button>' +
+      '<button type="button" data-action="rename">Rename</button>' +
       '<button type="button" data-action="download">Download ZIP</button>' +
       '<button type="button" class="danger" data-action="delete">Delete</button></div></article>';
   }).join("");
@@ -349,6 +460,7 @@ async function renderMods() {
         if (action === "apply") await applyMod(id);
         if (action === "disable") await disableMod(id);
         if (action === "workspace") await openModWorkspace(id);
+        if (action === "rename") await renameMod(id);
         if (action === "download") {
           const metaNow = await readMeta();
           const modNow = metaNow.mods.find(function(item) { return item.id === id; });
@@ -397,7 +509,8 @@ function renderFiles() {
       '<div class="vc-mm-file-name"><strong>' + esc(item.path) + '</strong><span>' + fmt(item.size) + '</span></div>' +
       '<div class="vc-mm-actions">' +
       (isText(item.path) && item.size < 2097152 ? '<button type="button" data-action="edit">Edit</button>' : '') +
-      '<button type="button" data-action="download">Download</button>' +
+      '<button type="button" data-action="download">Download Local</button>' +
+      '<button type="button" data-action="rename">Rename</button>' +
       '<button type="button" data-action="replace">Replace</button>' +
       '<button type="button" class="danger" data-action="delete">Delete</button></div></div>';
   }).join("") : '<div class="vc-mm-empty">No matching files.</div>';
@@ -410,6 +523,16 @@ function renderFiles() {
       const parts = cleanPath(path);
       try {
         if (button.dataset.action === "download") downloadBlob(await readFile(parts), parts[parts.length - 1]);
+        if (button.dataset.action === "rename") {
+          const nextPath = prompt("New OPFS path:", path);
+          if (nextPath && nextPath.trim() && nextPath.trim() !== path) {
+            const nextParts = cleanPath(nextPath.trim());
+            if (!nextParts) throw new Error("Invalid destination path.");
+            await moveGameFile(parts, nextParts);
+            await refreshFiles();
+            setStatus("Renamed " + path + " to " + nextParts.join("/") + ".");
+          }
+        }
         if (button.dataset.action === "replace") {
           pendingReplace = path;
           document.getElementById("vc-mm-replace-input").click();
@@ -449,6 +572,7 @@ function renderWorkspace() {
       '<div class="vc-mm-file-name"><strong>' + esc(name) + '</strong><span>' + fmt(bytes.byteLength) + '</span></div>' +
       '<div class="vc-mm-actions">' +
       (isText(name) && bytes.byteLength < 2097152 ? '<button type="button" data-action="edit">Edit</button>' : '') +
+      '<button type="button" data-action="rename">Rename</button>' +
       '<button type="button" data-action="replace">Replace</button>' +
       '<button type="button" class="danger" data-action="delete">Delete</button></div></div>';
   }).join("") : '<div class="vc-mm-empty">Upload or open a ZIP to edit its contents.</div>';
@@ -459,6 +583,20 @@ function renderWorkspace() {
       if (!button) return;
       const path = row.dataset.path;
       if (button.dataset.action === "edit") openEditor(path, new TextDecoder().decode(workspace.get(path)), "workspace");
+      if (button.dataset.action === "rename") {
+        const nextRaw = prompt("New ZIP path:", path);
+        const nextParts = nextRaw && cleanPath(nextRaw.trim());
+        if (nextParts) {
+          const next = nextParts.join("/");
+          if (next !== path) {
+            if (workspace.has(next) && !confirm("Replace existing workspace file " + next + "?")) return;
+            workspace.set(next, workspace.get(path));
+            workspace.delete(path);
+            renderWorkspace();
+            setStatus("Renamed workspace file to " + next + ".");
+          }
+        }
+      }
       if (button.dataset.action === "replace") {
         pendingReplace = "workspace:" + path;
         document.getElementById("vc-mm-replace-input").click();
@@ -527,16 +665,32 @@ function buildUI() {
     '<header class="vc-mm-header"><div><strong>VICE CITY MOD MANAGER</strong><span>ZIP mods • OPFS files • editable workspace</span></div>' +
     '<button id="vc-mm-close" type="button" aria-label="Close">×</button></header>' +
     '<nav class="vc-mm-tabs"><button type="button" data-mm-tab="mods" class="active">Mods</button>' +
-    '<button type="button" data-mm-tab="files">Game Files</button><button type="button" data-mm-tab="workspace">ZIP Workspace</button></nav>' +
+    '<button type="button" data-mm-tab="downloads">Downloads</button><button type="button" data-mm-tab="files">Game Files</button>' +
+    '<button type="button" data-mm-tab="workspace">ZIP Workspace</button></nav>' +
     '<div id="vc-mm-status" class="vc-mm-status" aria-live="polite">Ready.</div>' +
 
     '<div data-mm-panel="mods" class="vc-mm-body"><div class="vc-mm-toolbar">' +
     '<button id="vc-mm-upload-btn" type="button">Upload Mod ZIP</button><button id="vc-mm-refresh-mods" type="button">Refresh</button>' +
     '<input id="vc-mm-upload-input" type="file" accept=".zip,application/zip" hidden></div><div id="vc-mm-mods-list" class="vc-mm-list"></div></div>' +
 
+    '<div data-mm-panel="downloads" class="vc-mm-body hidden">' +
+    '<div class="vc-mm-download-card"><strong>Cloudflare Game Archive</strong><code id="vc-mm-proxy-url">' + esc(GAME_PROXY_URL) + '</code>' +
+    '<p>Uses the same proxy URL as the normal Vice City installer.</p><div class="vc-mm-actions">' +
+    '<button id="vc-mm-proxy-install" type="button">Install / Refresh from Proxy</button>' +
+    '<button id="vc-mm-proxy-download" type="button">Download Archive</button></div></div>' +
+    '<div class="vc-mm-download-card"><strong>Custom Download URL</strong>' +
+    '<input id="vc-mm-custom-url" type="url" placeholder="https://example.com/vc-assets.tar.gz" autocomplete="off">' +
+    '<p>Use your own HTTP/HTTPS tar.gz source. It must allow browser access/CORS for installation.</p><div class="vc-mm-actions">' +
+    '<button id="vc-mm-custom-install" type="button">Install / Refresh URL</button>' +
+    '<button id="vc-mm-custom-download" type="button">Download URL</button></div></div></div>' +
+
     '<div data-mm-panel="files" class="vc-mm-body hidden"><div class="vc-mm-toolbar">' +
-    '<input id="vc-mm-files-search" type="search" placeholder="Search OPFS game files"><button id="vc-mm-refresh-files" type="button">Refresh Files</button>' +
-    '<span id="vc-mm-files-count"></span></div><div class="vc-mm-warning">These are the real browser game files. Replace/delete carefully.</div>' +
+    '<input id="vc-mm-files-search" type="search" placeholder="Search OPFS game files">' +
+    '<button id="vc-mm-files-upload-btn" type="button">Upload File</button>' +
+    '<button id="vc-mm-files-proxy-download" type="button">Download Game Archive</button>' +
+    '<button id="vc-mm-refresh-files" type="button">Refresh Files</button>' +
+    '<input id="vc-mm-files-upload-input" type="file" multiple hidden><span id="vc-mm-files-count"></span></div>' +
+    '<div class="vc-mm-warning">These are the real browser game files. You can upload, rename, replace, edit, download or delete them. Restart the game after changing assets.</div>' +
     '<div id="vc-mm-files-list" class="vc-mm-list vc-mm-files"></div></div>' +
 
     '<div data-mm-panel="workspace" class="vc-mm-body hidden"><div class="vc-mm-toolbar">' +
@@ -583,6 +737,48 @@ function buildUI() {
     renderMods().catch(function(e) { setStatus(e.message, true); });
   });
 
+  overlay.querySelector("#vc-mm-proxy-install").addEventListener("click", function() {
+    installArchiveFromUrl(GAME_PROXY_URL).catch(function(e) { setStatus(e.message, true); });
+  });
+  overlay.querySelector("#vc-mm-proxy-download").addEventListener("click", function() {
+    try { openArchiveDownload(GAME_PROXY_URL); } catch (e) { setStatus(e.message, true); }
+  });
+
+  const customUrl = overlay.querySelector("#vc-mm-custom-url");
+  overlay.querySelector("#vc-mm-custom-install").addEventListener("click", function() {
+    installArchiveFromUrl(customUrl.value).catch(function(e) { setStatus(e.message, true); });
+  });
+  overlay.querySelector("#vc-mm-custom-download").addEventListener("click", function() {
+    try { openArchiveDownload(customUrl.value); } catch (e) { setStatus(e.message, true); }
+  });
+
+  overlay.querySelector("#vc-mm-files-proxy-download").addEventListener("click", function() {
+    try { openArchiveDownload(GAME_PROXY_URL); } catch (e) { setStatus(e.message, true); }
+  });
+
+  const gameUploadInput = overlay.querySelector("#vc-mm-files-upload-input");
+  overlay.querySelector("#vc-mm-files-upload-btn").addEventListener("click", function() {
+    gameUploadInput.value = "";
+    gameUploadInput.click();
+  });
+  gameUploadInput.addEventListener("change", async function() {
+    try {
+      for (const file of gameUploadInput.files || []) {
+        const desired = prompt("Target OPFS path for " + file.name + ":", file.name);
+        if (!desired) continue;
+        const parts = cleanPath(desired.trim());
+        if (!parts) throw new Error("Invalid upload path.");
+        if (PROTECTED_ROOTS.has(parts[0])) throw new Error("That upload path is protected.");
+        if (await exists(parts) && !confirm("Replace existing file " + parts.join("/") + "?")) continue;
+        await writeFile(parts, file);
+      }
+      await refreshFiles();
+      setStatus("Uploaded selected file(s) to Vice City OPFS.");
+    } catch (e) {
+      setStatus(e.message, true);
+    }
+  });
+
   overlay.querySelector("#vc-mm-refresh-files").addEventListener("click", function() {
     refreshFiles().catch(function(e) { setStatus(e.message, true); });
   });
@@ -599,8 +795,15 @@ function buildUI() {
   const addInput = overlay.querySelector("#vc-mm-workspace-add-input");
   overlay.querySelector("#vc-mm-workspace-add").addEventListener("click", function() { addInput.value = ""; addInput.click(); });
   addInput.addEventListener("change", async function() {
-    for (const file of addInput.files || []) workspace.set(file.name, new Uint8Array(await file.arrayBuffer()));
+    for (const file of addInput.files || []) {
+      const desired = prompt("ZIP path for " + file.name + ":", file.name);
+      if (!desired) continue;
+      const parts = cleanPath(desired.trim());
+      if (!parts) continue;
+      workspace.set(parts.join("/"), new Uint8Array(await file.arrayBuffer()));
+    }
     renderWorkspace();
+    setStatus("Added file(s) to ZIP Workspace.");
   });
   workspaceSearch.addEventListener("input", renderWorkspace);
 

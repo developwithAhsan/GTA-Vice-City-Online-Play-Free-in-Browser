@@ -1,6 +1,6 @@
-# GTA Vice City Online — Play Free in Browser (WebAssembly Port)
+#vc — Play Free in Browser (WebAssembly Port)
 
-> **Play GTA Vice City online free** — no download, no install required. The full game runs entirely in your browser via WebAssembly. Works on desktop and mobile.
+> **Play vc** — no download, no install required. The full game runs entirely in your browser via WebAssembly. Works on desktop and mobile.
 
 [![Live Demo](https://img.shields.io/badge/Play%20Now-Live%20Demo-ff2870?style=for-the-badge)](https://joncodeofficial.github.io/gta-vice-city-wasm/)
 [![WebAssembly](https://img.shields.io/badge/Powered%20By-WebAssembly-654ff0?style=for-the-badge&logo=webassembly)](https://webassembly.org/)
